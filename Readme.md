@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Григорий Беликов](https://up.htmlacademy.ru/javascript/24/user/1837179).
-* Наставник: `Неизвестно`.
+* Студент: [Григорий Беликов] (https://up.htmlacademy.ru/javascript/24/user/1837179).
+* Наставник: [Даниил Стерликов] (https://htmlacademy.ru/profile/id1588317).
 
 ---
 

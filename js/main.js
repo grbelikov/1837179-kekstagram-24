@@ -1,16 +1,5 @@
-// Разбиваем по точке комментарии и создаем массив
-const COMMENTS_MESSAGES = 'Всё отлично! В целом всё неплохо; Но не всё. Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально. Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше. Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше. Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'.split('.');
-const COMMENTS_NAMES = ['Антон', 'Борис', 'Сергей', 'Алёна', 'Наташа', 'Соня'];
-
-// Функция, возвращающая случайное целое число из переданного диапазона включительно
-function getRandomInteger(valueFrom, valueTo) {
-  if ((valueFrom < 0) || (valueFrom >= valueTo)) {
-    return false;
-  }
-  // Cлучайное число от min до max
-  const randomValue = valueFrom + Math.random() * (valueTo + 1 - valueFrom);
-  return Math.floor(randomValue);
-}
+import {COMMENTS_MESSAGES, COMMENTS_NAMES} from './consts.js';
+import {getRandomInteger} from './util.js';
 
 // Функция для создания конечного объекта нужной структуры
 function createArrayObject() {

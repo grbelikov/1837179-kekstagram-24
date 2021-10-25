@@ -1,8 +1,4 @@
-function createTemplate(
-  urlSrc='https://htmlacademy.ru',
-  commentsLength='COMM_example',
-  likesAmount='LIKES_example',
-) {
+function createTemplate(objectComment) {
   // Контейнер для комментариев
   const blockPastPictures = document.querySelector('.pictures');
 
@@ -19,10 +15,9 @@ function createTemplate(
   const likesPicture = infoPicturesTemplate.querySelector('.picture__likes');
 
   // И пишем переданные значения
-  imgPicture.src = urlSrc;
-  imgPicture.alt = 'Aquaaaaaaa';
-  commentsPicture.textContent = commentsLength;
-  likesPicture.textContent = likesAmount;
+  imgPicture.src = objectComment.url;
+  commentsPicture.textContent = objectComment.likes;
+  likesPicture.textContent = objectComment.comments.length;
 
   blockPastPictures.append(infoPicturesTemplate);
 }

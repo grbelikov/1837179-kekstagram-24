@@ -1,5 +1,10 @@
-import {COMMENTS_MESSAGES, COMMENTS_NAMES} from './consts.js';
 import {getRandomInteger} from './util.js';
+import {createTemplate} from './paint-pictures.js';
+
+// Разбиваем по точке комментарии и создаем массив
+const COMMENTS_MESSAGES = 'Всё отлично! В целом всё неплохо; Но не всё. Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально. Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше. Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше. Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'.split('.');
+const COMMENTS_NAMES = ['Антон', 'Борис', 'Сергей', 'Алёна', 'Наташа', 'Соня'];
+const SIMILAR_COMMENT_COUNT = 25;
 
 // Функция для создания конечного объекта нужной структуры
 function createArrayObject() {
@@ -16,8 +21,8 @@ function createArrayObject() {
     };
   }
 
-  // Создаем в цикле 25 объектов с заданой структурой
-  for (let i=1; i<26; i++) {
+  // Создаем в цикле 25 объектов с заданной структурой
+  for (let i=1; i<=SIMILAR_COMMENT_COUNT; i++) {
     const userObject = {
       id: i,
       url: `photos/${i}.jpg`,
@@ -37,4 +42,12 @@ function createArrayObject() {
   return generatedObjectsArray;
 }
 
-createArrayObject();
+const similarComments = createArrayObject();
+
+for (let i=0; i<SIMILAR_COMMENT_COUNT; i++) {
+  createTemplate(
+    similarComments[i].url,
+    similarComments[i].likes,
+    similarComments[i].comments.length,
+  );
+}

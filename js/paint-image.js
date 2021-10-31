@@ -26,6 +26,8 @@ function createTemplate(objectComment) {
   });
 
   blockPastPictures.appendChild(fragment);
+
+
 }
 
 export {createTemplate};

@@ -19,6 +19,7 @@ function createTemplate(objectComment) {
     const likesPicture = infoPicturesTemplate.querySelector('.picture__likes');
 
     imgPicture.src = comment.url;
+    imgPicture.alt = comment.description;
     commentsPicture.textContent = comment.comments.length;
     likesPicture.textContent = comment.likes;
 

@@ -1,9 +1,9 @@
 // Функция делает класс невидимым
-function addHiddenTag(className) {
+const addHiddenTag = (className) => {
   className.classList.add('hidden');
-}
+};
 
-function closeFullImage() {
+const closeFullImage = () => {
   const bigPictureSection = document.querySelector('.big-picture');
   // Кнопка закрытия большой картинки
   const contentPicture = document.querySelector('#picture-cancel');
@@ -21,9 +21,9 @@ function closeFullImage() {
     addHiddenTag(bigPictureSection);
     document.body.classList.remove('modal-open');
   });
-}
+};
 
-function addComments(commentsArray) {
+const addComments = (commentsArray) => {
   // Находим контент шаблона
   const contentComment = document.querySelector('#comment').content;
 
@@ -36,7 +36,7 @@ function addComments(commentsArray) {
   // Создаем по шаблону комментарии
   const fragmentComment = document.createDocumentFragment();
 
-  for (let k=0; k<commentsArray.comments.length; k++) {
+  commentsArray.comments.forEach((comment) => {
     // делаем копию шаблона
     const commentTemplate = elementComment.cloneNode(true);
 
@@ -44,16 +44,17 @@ function addComments(commentsArray) {
     const imgComment = commentTemplate.querySelector('.social__picture');
     const textComment = commentTemplate.querySelector('.social__text');
 
-    imgComment.src = commentsArray.comments[k].avatar;
-    imgComment.alt = commentsArray.comments[k].name;
-    textComment.textContent = commentsArray.comments[k].message;
+    imgComment.src = comment.avatar;
+    imgComment.alt = comment.name;
+    textComment.textContent = comment.message;
 
     fragmentComment.appendChild(commentTemplate);
-  }
-  socialComments.appendChild(fragmentComment);
-}
+  });
 
-function openFullImage(objComment) {
+  socialComments.appendChild(fragmentComment);
+};
+
+const setupFullImage = (objComment) => {
   const bigPictureSection = document.querySelector('.big-picture');
   const bigPictureImg = document.querySelector('.big-picture__img img');
   const likesCounter = document.querySelector('.likes-count');
@@ -65,12 +66,12 @@ function openFullImage(objComment) {
   const bodyElement = document.body;
 
   const thumbnails = document.querySelectorAll('.picture__img');
-  const likes = document.querySelectorAll('.picture__likes');
-  const comments = document.querySelectorAll('.picture__comments');
+  const likesElement = document.querySelectorAll('.picture__likes');
+  const commentsElement = document.querySelectorAll('.picture__comments');
 
   //!!!!!! Почему это работает? почему цикл не возвращает последнюю i массива каждый раз?
   for (let i = 0; i < thumbnails.length; i++) {
-    thumbnails[i].onclick = function() {
+    thumbnails[i].onclick = () => {
       // Удаляем класс hidden при клике, чтобы открылась полная версия картинки
       bigPictureSection.classList.remove('hidden');
 
@@ -82,9 +83,9 @@ function openFullImage(objComment) {
       // поля дескрипшн нет в задании!) из миниатюры в полную версию
       socialCaption.textContent = thumbnails[i].alt;
       // Добавляем кол-во лайков
-      likesCounter.textContent = likes[i].textContent;
+      likesCounter.textContent = likesElement[i].textContent;
       // Добавляем кол-во комментариев
-      commentsCount.textContent = comments[i].textContent;
+      commentsCount.textContent = commentsElement[i].textContent;
 
       // прячем классы social__comment-count и comments-loader, добавляя им
       // класс hidden. С ними мы разберёмся позже, в другом домашнем задании
@@ -99,6 +100,6 @@ function openFullImage(objComment) {
       addComments(objComment[i]);
     };
   }
-}
+};
 
-export {openFullImage};
+export {setupFullImage};

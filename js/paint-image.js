@@ -1,6 +1,6 @@
-import {openFullImage} from './full-size-image.js';
+import {setupFullImage} from './full-size-image.js';
 
-function createTemplate(objectComment) {
+const createTemplate = (objectComment) => {
   const fragment = document.createDocumentFragment();
 
   // Контейнер для комментариев
@@ -29,7 +29,7 @@ function createTemplate(objectComment) {
   });
 
   blockPastPictures.appendChild(fragment);
-  openFullImage(objectComment);
-}
+  setupFullImage(objectComment);
+};
 
 export {createTemplate};

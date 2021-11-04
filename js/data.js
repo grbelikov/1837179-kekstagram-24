@@ -2,19 +2,17 @@ import {COMMENTS_MESSAGES, COMMENTS_NAMES, SIMILAR_COMMENT_COUNT} from './consts
 import {getRandomInteger} from './util.js';
 
 // Функция для создания конечного объекта нужной структуры
-function createArrayObject() {
+const createArrayObject = () => {
   const generatedObjectsArray = [];
   const description = 'description to test ';
 
   // Функция для создания комментария заданной структуры
-  function createCommentObject(idObjNumber, idCommentNumber) {
-    return {
-      id: +(idObjNumber.toString() + idCommentNumber.toString()),
-      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-      message: COMMENTS_MESSAGES[getRandomInteger(0, COMMENTS_MESSAGES.length-1)],
-      name: COMMENTS_NAMES[getRandomInteger(0, COMMENTS_NAMES.length-1)],
-    };
-  }
+  const createCommentObject = (idObjNumber, idCommentNumber) => ({
+    id: +(idObjNumber.toString() + idCommentNumber.toString()),
+    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+    message: COMMENTS_MESSAGES[getRandomInteger(0, COMMENTS_MESSAGES.length-1)],
+    name: COMMENTS_NAMES[getRandomInteger(0, COMMENTS_NAMES.length-1)],
+  });
 
   // Создаем в цикле 25 объектов с заданной структурой
   for (let i=1; i<=SIMILAR_COMMENT_COUNT; i++) {
@@ -35,6 +33,6 @@ function createArrayObject() {
   }
 
   return generatedObjectsArray;
-}
+};
 
 export {createArrayObject};

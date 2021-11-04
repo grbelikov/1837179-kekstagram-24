@@ -23,7 +23,7 @@ function closeFullImage() {
   });
 }
 
-function addComments(commentsAmount) {
+function addComments(commentsArray) {
   // Находим контент шаблона
   const contentComment = document.querySelector('#comment').content;
 
@@ -36,7 +36,7 @@ function addComments(commentsAmount) {
   // Создаем по шаблону комментарии
   const fragmentComment = document.createDocumentFragment();
 
-  for (let k=0; k<commentsAmount; k++) {
+  for (let k=0; k<commentsArray.comments.length; k++) {
     // делаем копию шаблона
     const commentTemplate = elementComment.cloneNode(true);
 
@@ -44,9 +44,9 @@ function addComments(commentsAmount) {
     const imgComment = commentTemplate.querySelector('.social__picture');
     const textComment = commentTemplate.querySelector('.social__text');
 
-    imgComment.src = `src # ${k}`;
-    imgComment.alt = `alt # ${k}`;
-    textComment.textContent = `textContent # ${k}`;
+    imgComment.src = commentsArray.comments[k].avatar;
+    imgComment.alt = commentsArray.comments[k].name;
+    textComment.textContent = commentsArray.comments[k].message;
 
     fragmentComment.appendChild(commentTemplate);
   }
@@ -96,14 +96,7 @@ function openFullImage(objComment) {
       bodyElement.classList.add('modal-open');
 
       closeFullImage(bodyElement);
-
-      console.log(objComment[0]);
-      console.log(objComment[0].comments[0].avatar);
-      console.log(objComment[0].comments[0].name);
-      console.log(objComment[0].comments[0].message);
-
-      addComments(commentsCount.textContent);
-
+      addComments(objComment[i]);
     };
   }
 }

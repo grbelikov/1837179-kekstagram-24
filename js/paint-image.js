@@ -1,3 +1,5 @@
+import {openFullImage} from './full-size-image.js';
+
 function createTemplate(objectComment) {
   const fragment = document.createDocumentFragment();
 
@@ -27,8 +29,7 @@ function createTemplate(objectComment) {
   });
 
   blockPastPictures.appendChild(fragment);
-
-
+  openFullImage(objectComment);
 }
 
 export {createTemplate};

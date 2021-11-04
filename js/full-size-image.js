@@ -3,7 +3,7 @@ function addHiddenTag(className) {
   className.classList.add('hidden');
 }
 
-function closeFullImage(bodyElement) {
+function closeFullImage() {
   const bigPictureSection = document.querySelector('.big-picture');
   // Кнопка закрытия большой картинки
   const contentPicture = document.querySelector('#picture-cancel');
@@ -13,27 +13,56 @@ function closeFullImage(bodyElement) {
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27) { // 27 === ESC
       addHiddenTag(bigPictureSection);
-      bodyElement.classList.remove('modal-open');
+      document.body.classList.remove('modal-open');
     }
   });
 
-  contentPicture.onclick = function() {
+  contentPicture.addEventListener('click', () => {
     addHiddenTag(bigPictureSection);
-    bodyElement.classList.remove('modal-open');
-  };
+    document.body.classList.remove('modal-open');
+  });
 }
 
-function openFullImage () {
+function addComments(commentsAmount) {
+  // Находим контент шаблона
+  const contentComment = document.querySelector('#comment').content;
+
+  const elementComment = contentComment.querySelector('.social__comment');
+  const socialComments = document.querySelector('.social__comments');
+
+  // Удаляем все комментарии в social__comments (элементы li)
+  socialComments.innerHTML = '';
+
+  // Создаем по шаблону комментарии
+  const fragmentComment = document.createDocumentFragment();
+
+  for (let k=0; k<commentsAmount; k++) {
+    // делаем копию шаблона
+    const commentTemplate = elementComment.cloneNode(true);
+
+    // Находим в шаблоне comment нужные элементы
+    const imgComment = commentTemplate.querySelector('.social__picture');
+    const textComment = commentTemplate.querySelector('.social__text');
+
+    imgComment.src = `src # ${k}`;
+    imgComment.alt = `alt # ${k}`;
+    textComment.textContent = `textContent # ${k}`;
+
+    fragmentComment.appendChild(commentTemplate);
+  }
+  socialComments.appendChild(fragmentComment);
+}
+
+function openFullImage(objComment) {
   const bigPictureSection = document.querySelector('.big-picture');
   const bigPictureImg = document.querySelector('.big-picture__img img');
   const likesCounter = document.querySelector('.likes-count');
 
   const commentsCount = document.querySelector('.comments-count');
-  const socialComments = document.querySelector('.social__comments');
   const socialCaption = document.querySelector('.social__caption');
   const socialCommentCount = document.querySelector('.social__comment-count');
   const commentsLoader = document.querySelector('.comments-loader');
-  const bodyElement = document.querySelector('body');
+  const bodyElement = document.body;
 
   const thumbnails = document.querySelectorAll('.picture__img');
   const likes = document.querySelectorAll('.picture__likes');
@@ -42,7 +71,6 @@ function openFullImage () {
   //!!!!!! Почему это работает? почему цикл не возвращает последнюю i массива каждый раз?
   for (let i = 0; i < thumbnails.length; i++) {
     thumbnails[i].onclick = function() {
-
       // Удаляем класс hidden при клике, чтобы открылась полная версия картинки
       bigPictureSection.classList.remove('hidden');
 
@@ -63,22 +91,18 @@ function openFullImage () {
       addHiddenTag(socialCommentCount);
       addHiddenTag(commentsLoader);
 
-      // Добавляем или убираем тегу body класс modal-open,
+      // Добавляем или убираем у тега body класс modal-open,
       // чтобы контейнер с фотографиями позади не прокручивался
       bodyElement.classList.add('modal-open');
 
       closeFullImage(bodyElement);
 
-      console.log(commentsCount.textContent);
+      console.log(objComment[0]);
+      console.log(objComment[0].comments[0].avatar);
+      console.log(objComment[0].comments[0].name);
+      console.log(objComment[0].comments[0].message);
 
-
-      // Удаляем содержимое social__comment
-      while (socialComments.firstChild) {
-        socialComments.removeChild(socialComments.lastChild);
-      }
-
-
-
+      addComments(commentsCount.textContent);
 
     };
   }

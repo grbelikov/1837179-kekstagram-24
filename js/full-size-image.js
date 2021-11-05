@@ -1,25 +1,35 @@
-// Функция делает класс невидимым
+// Функция делает класс невидимым, добавляя тег hidden
 const addHiddenTag = (className) => {
   className.classList.add('hidden');
 };
 
-const closeFullImage = () => {
-  const bigPictureSection = document.querySelector('.big-picture');
-  // Кнопка закрытия большой картинки
-  const contentPicture = document.querySelector('#picture-cancel');
+// Функция делает класс видимым, удаляя тег hidden
+const removeHiddenTag = (className) => {
+  className.classList.remove('hidden');
+};
 
-  // !!!!!!!!!! В функциях ниже повторяющийся код. Как обьединить?
+// Функция задаёт body класс modal-open чтобы не прокручивался фон
+const setBodyModalOpen = () => {
+  document.body.classList.add('modal-open');
+};
+
+// Функция убирает body класс modal-open
+const removeBodyModalOpen = () => {
+  document.body.classList.remove('modal-open');
+};
+
+const closeFullImage = (elementToClose, onClickObject, _inFocus=false) => {
   // Закрываем по крестику или кнопке ESC фулл фото
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) { // 27 === ESC
-      addHiddenTag(bigPictureSection);
-      document.body.classList.remove('modal-open');
+    if ((evt.keyCode === 27) && (!_inFocus)) { // 27 = ESC
+      addHiddenTag(elementToClose);
+      removeBodyModalOpen();
     }
   });
 
-  contentPicture.addEventListener('click', () => {
-    addHiddenTag(bigPictureSection);
-    document.body.classList.remove('modal-open');
+  onClickObject.addEventListener('click', () => {
+    addHiddenTag(elementToClose);
+    removeBodyModalOpen();
   });
 };
 
@@ -63,7 +73,6 @@ const setupFullImage = (objComment) => {
   const socialCaption = document.querySelector('.social__caption');
   const socialCommentCount = document.querySelector('.social__comment-count');
   const commentsLoader = document.querySelector('.comments-loader');
-  const bodyElement = document.body;
 
   const thumbnails = document.querySelectorAll('.picture__img');
   const likesElement = document.querySelectorAll('.picture__likes');
@@ -73,7 +82,7 @@ const setupFullImage = (objComment) => {
   for (let i = 0; i < thumbnails.length; i++) {
     thumbnails[i].onclick = () => {
       // Удаляем класс hidden при клике, чтобы открылась полная версия картинки
-      bigPictureSection.classList.remove('hidden');
+      removeHiddenTag(bigPictureSection);
 
       // Добавляем ссыль из миниатюры в полную версию
       bigPictureImg.src = thumbnails[i].src;
@@ -94,12 +103,20 @@ const setupFullImage = (objComment) => {
 
       // Добавляем или убираем у тега body класс modal-open,
       // чтобы контейнер с фотографиями позади не прокручивался
-      bodyElement.classList.add('modal-open');
+      setBodyModalOpen();
 
-      closeFullImage(bodyElement);
+      closeFullImage(
+        document.querySelector('.big-picture'),
+        document.querySelector('#picture-cancel'),
+      );
       addComments(objComment[i]);
     };
   }
 };
 
 export {setupFullImage};
+export {setBodyModalOpen};
+export {removeBodyModalOpen};
+export {addHiddenTag};
+export {removeHiddenTag};
+export {closeFullImage};

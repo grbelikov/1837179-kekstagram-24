@@ -3,35 +3,45 @@ import {setBodyModalOpen} from './full-size-image.js';
 import {removeHiddenTag} from './full-size-image.js';
 import {closeFullImage} from './full-size-image.js';
 
-const checkStatusInFocus = () => {
-  console.log('AAA');
-
-  // input.onfocus = function() {
-    //   if (this.classList.contains('invalid')) {
-      //     // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
-      //     this.classList.remove('invalid');
-      //     error.innerHTML = "";
-      //   }
-      // };
-
+const checkStatusInFocus = (elementToCheck) => {
+  // если в фокусе поле схэштегом, убираем закрытие по кнопке ESC
+  // p.s. не работает. не понимаю, как реализовать.
+  textHashtags.onfocus = () => {
+    closeFullImage(imgUploadOverlay, imgUploadCancel, true);
+    console.log('true');
+  };
+  textHashtags.onblur = () => {
+    closeFullImage(imgUploadOverlay, imgUploadCancel, false);
+    console.log('false');
+  };
 };
 
 const activateUploadImage = () => {
-  const imgIploadOverlay = document.querySelector('.img-upload__overlay');
-  const imgUploadInput = document.querySelector('.img-upload__input');
+  const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+  const imgUploadInput = document.querySelector('#upload-file');
   const imgUploadCancel = document.querySelector('.img-upload__cancel');
   const textHashtags = document.querySelector('.text__hashtags');
 
   imgUploadInput.addEventListener('change', () => {
     setBodyModalOpen();
-    removeHiddenTag(imgIploadOverlay);
+    removeHiddenTag(imgUploadOverlay);
 
-    // если инпут в фокусе, убираем закрытие по кнопке ESC
-    if (checkStatusInFocus()) {
-      closeFullImage(imgIploadOverlay, imgUploadCancel, true);
-    } else {
-      closeFullImage(imgIploadOverlay, imgUploadCancel, false);
-    }
+    checkStatusInFocus(textHashtags);
+  });
+};
+
+const collectUserHashtagInput = () => {
+  const textHashtags = document.querySelector('.text__hashtags');
+
+  textHashtags.addEventListener('input', () => {
+    let arrayHashtagsValues = [];
+    // приводим к нижнему регистру
+    arrayHashtagsValues = textHashtags.value.toLowerCase().split(' ');
+
+    // отфильтровываем, чтобы не попадали пустые значения '' в случае нажатия на пробел
+    arrayHashtagsValues = arrayHashtagsValues.filter(Boolean);
+
+    validateHashtagsArray(arrayHashtagsValues);
   });
 };
 
@@ -55,25 +65,7 @@ const validateHashtagsArray = (hashtagValuesArray) => {
   });
 };
 
-const validateHashtagInput = () => {
-  const textHashtags = document.querySelector('.text__hashtags');
-
-  textHashtags.addEventListener('input', () => {
-    // const valueLength = textHashtags.value.length;
-    let arrayHashtagsValues = [];
-
-    // и приводим к нижнему регистру
-    arrayHashtagsValues = textHashtags.value.toLowerCase().split(' ');
-
-    // отфильтровываем, чтобы не попадали пустые значения '' в случае нажатия на пробел
-    arrayHashtagsValues = arrayHashtagsValues.filter(Boolean);
-
-    validateHashtagsArray(arrayHashtagsValues);
-  });
-};
-
-
-validateHashtagInput();
+collectUserHashtagInput();
 
 
 export {activateUploadImage};

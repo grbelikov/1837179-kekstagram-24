@@ -63,7 +63,7 @@ const setSlider = (effectName) => {
     },
   };
 
-  imgUploadPreview.style.filter = `${sliderEffectsDictionary[effectName].name}(${sliderValue}${sliderEffectsDictionary[effectName].units})`;
+  // imgUploadPreview.style.filter = `${sliderEffectsDictionary[effectName].name}(${sliderValue}${sliderEffectsDictionary[effectName].units})`;
 };
 
 // Эффекты на изображение
@@ -90,7 +90,6 @@ const effectsToImage = () => {
     });
   });
 };
-
 
 
 effectsToImage();

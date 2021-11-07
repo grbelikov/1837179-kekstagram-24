@@ -24,17 +24,17 @@ const activateUploadImage = () => {
 
 // работы с полем хэштег
 // ??????????????????????????????????????
-const checkStatusInFocus = (elenToCheckFocus) => {
+const checkStatusInFocus = (elemToCheckFocus) => {
   // если в фокусе поле с хэштегом, убираем закрытие по кнопке ESC
   // p.s. не работает. не понимаю, как реализовать.
   const imgUploadCancel = document.querySelector('.img-upload__cancel');
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
-  elenToCheckFocus.onfocus = () => {
+  elemToCheckFocus.onfocus = () => {
     hideElement(imgUploadOverlay, imgUploadCancel, true);
     console.log('hashtag');
   };
-  elenToCheckFocus.onblur = () => {
+  elemToCheckFocus.onblur = () => {
     hideElement(imgUploadOverlay, imgUploadCancel, false);
     console.log('comment');
   };

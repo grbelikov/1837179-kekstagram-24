@@ -1,6 +1,6 @@
 import {setupFullImage} from './full-size-image.js';
 
-const createTemplate = (objectComment) => {
+const createTemplate = (commentsArray) => {
   const fragment = document.createDocumentFragment();
 
   // Контейнер для комментариев
@@ -11,7 +11,7 @@ const createTemplate = (objectComment) => {
   const elementPicture = contentPicture.querySelector('.picture');
 
   // Пишем переданные значения
-  objectComment.forEach((comment) => {
+  commentsArray.forEach((comment) => {
     // делаем копию шаблона
     const infoPicturesTemplate = elementPicture.cloneNode(true);
 
@@ -29,7 +29,7 @@ const createTemplate = (objectComment) => {
   });
 
   blockPastPictures.appendChild(fragment);
-  setupFullImage(objectComment);
+  setupFullImage(commentsArray);
 };
 
 export {createTemplate};

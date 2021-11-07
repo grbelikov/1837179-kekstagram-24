@@ -78,9 +78,8 @@ const setupFullImage = (objComment) => {
   const likesElement = document.querySelectorAll('.picture__likes');
   const commentsElement = document.querySelectorAll('.picture__comments');
 
-  //!!!!!! Почему это работает? почему цикл не возвращает последнюю i массива каждый раз?
   for (let i = 0; i < thumbnails.length; i++) {
-    thumbnails[i].onclick = () => {
+    thumbnails[i].addEventListener('click', () => {
       // Удаляем класс hidden при клике, чтобы открылась полная версия картинки
       removeHiddenTag(bigPictureSection);
 
@@ -88,8 +87,6 @@ const setupFullImage = (objComment) => {
       bigPictureImg.src = thumbnails[i].src;
       bigPictureImg.alt = `Фотография в полном размере ${[i]}`;
 
-      //!!!!!!! Добавляем описание в альт(или куда?? в задании ошибка -
-      // поля дескрипшн нет в задании!) из миниатюры в полную версию
       socialCaption.textContent = thumbnails[i].alt;
       // Добавляем кол-во лайков
       likesCounter.textContent = likesElement[i].textContent;
@@ -110,7 +107,7 @@ const setupFullImage = (objComment) => {
         document.querySelector('#picture-cancel'),
       );
       addComments(objComment[i]);
-    };
+    });
   }
 };
 

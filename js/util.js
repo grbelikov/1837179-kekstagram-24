@@ -8,4 +8,8 @@ const getRandomInteger = (valueFrom, valueTo) => {
   return Math.floor(randomValue);
 };
 
+// Функция проверки в массиве повторяющихся значений
+const hasDuplicates = (arrayToCheck) => (new Set(arrayToCheck)).size !== arrayToCheck.length;
+
 export {getRandomInteger};
+export {hasDuplicates};

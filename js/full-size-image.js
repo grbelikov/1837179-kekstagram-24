@@ -18,7 +18,7 @@ const removeBodyModalOpen = () => {
   document.body.classList.remove('modal-open');
 };
 
-const closeFullImage = (elementToClose, onClickObject, _inFocus=false) => {
+const hideElement = (elementToClose, onClickObject, _inFocus=false) => {
   // Закрываем по крестику или кнопке ESC фулл фото
   document.addEventListener('keydown', (evt) => {
     if ((evt.keyCode === 27) && (!_inFocus)) { // 27 = ESC
@@ -105,7 +105,7 @@ const setupFullImage = (objComment) => {
       // чтобы контейнер с фотографиями позади не прокручивался
       setBodyModalOpen();
 
-      closeFullImage(
+      hideElement(
         document.querySelector('.big-picture'),
         document.querySelector('#picture-cancel'),
       );
@@ -119,4 +119,4 @@ export {setBodyModalOpen};
 export {removeBodyModalOpen};
 export {addHiddenTag};
 export {removeHiddenTag};
-export {closeFullImage};
+export {hideElement};

@@ -1,7 +1,12 @@
 import {setBodyModalOpen} from './full-size-image.js';
-// import {addHiddenTag} from './full-size-image.js';
 import {removeHiddenTag} from './full-size-image.js';
-import {closeFullImage} from './full-size-image.js';
+import {hideElement} from './full-size-image.js';
+import {hasDuplicates} from './util.js';
+import {scaleImage} from './image-effects.js';
+
+
+let BOOL_SUBMIT_STATUS_HASHTAG = true;
+let BOOL_SUBMIT_STATUS_COMMENT = true;
 
 //?????????????? как сбрасывать значение поля выбора файла #upload-file?
 const activateUploadImage = () => {
@@ -9,7 +14,7 @@ const activateUploadImage = () => {
   const imgUploadInput = document.querySelector('#upload-file');
   const textHashtags = document.querySelector('.text__hashtags');
 
-  imgUploadInput.addEventListener('change', (evt) => {
+  imgUploadInput.addEventListener('change', () => {
     setBodyModalOpen();
     removeHiddenTag(imgUploadOverlay);
 
@@ -26,42 +31,57 @@ const checkStatusInFocus = (elenToCheckFocus) => {
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
   elenToCheckFocus.onfocus = () => {
-    closeFullImage(imgUploadOverlay, imgUploadCancel, true);
+    hideElement(imgUploadOverlay, imgUploadCancel, true);
     console.log('hashtag');
   };
   elenToCheckFocus.onblur = () => {
-    closeFullImage(imgUploadOverlay, imgUploadCancel, false);
+    hideElement(imgUploadOverlay, imgUploadCancel, false);
     console.log('comment');
   };
 };
 
-
 const validateHashtagsArray = (hashtagValuesArray) => {
-  let _bool = true;
+  BOOL_SUBMIT_STATUS_HASHTAG = true;
+
   if (hashtagValuesArray.length > 5) {
     console.log('нельзя указать больше пяти хэш-тегов');
-    return false;
+    BOOL_SUBMIT_STATUS_HASHTAG = false;
   }
-// ?????????????доделать
+  if (hasDuplicates(hashtagValuesArray)) {
+    console.log('имеются повторяющиеся хэштеги');
+    BOOL_SUBMIT_STATUS_HASHTAG = false;
+  }
+
+  const validateStringToUnacceptableSymbols = (stringToCheck) => {
+    // У нас существует другая проверка на первый символ === #, так что отсечем его.
+    // Иначе он будет подпадать под шаблон регекспа и придется писать доп. код
+    stringToCheck = stringToCheck.slice(1);
+    if (stringToCheck.length > 0) {
+      const regexp = /[^а-я\w]/i;
+      return regexp.test(stringToCheck);
+    }
+  };
+
   hashtagValuesArray.forEach((element) => {
     // console.log(element);
+
     if (element[0] !== '#') {
-      console.log('хэш-тег должен начинаться с #');
-      _bool = false;
+      console.log('хэштег должен начинаться с #');
+      BOOL_SUBMIT_STATUS_HASHTAG = false;
     }
-    if (element.length < 2) {
-      console.log('хеш-тег не может состоять только из одной решётки');
-      _bool = false;
+    else if (element.length < 2) {
+      console.log('хештег не может состоять только из одной решётки');
+      BOOL_SUBMIT_STATUS_HASHTAG = false;
     }
     if (element.length > 20) {
       console.log('максимальная длина одного хэш-тега 20 символов');
-      _bool = false;
+      BOOL_SUBMIT_STATUS_HASHTAG = false;
     }
-    // else if ((element.length > 1) && (element[1] === '@')) {
-    //   console.log('хэштег не может содержать пробелы, символы (#, @, $ и т. п.)');
-    // }
+    if (validateStringToUnacceptableSymbols(element)) {
+      console.log('хэштег может содержать только цифры, буквы и нижнее подчеркивание');
+      BOOL_SUBMIT_STATUS_HASHTAG = false;
+    }
   });
-  return _bool;
 };
 
 const collectUserHashtagInput = () => {
@@ -76,11 +96,8 @@ const collectUserHashtagInput = () => {
     arrayHashtagsValues = arrayHashtagsValues.filter(Boolean);
 
     validateHashtagsArray(arrayHashtagsValues);
-    // console.log(validateHashtagsArray(arrayHashtagsValues));
-    // console.log(arrayHashtagsValues);
   });
 };
-
 
 // работы с полем комментария
 const validateCommentInput = () => {
@@ -88,22 +105,41 @@ const validateCommentInput = () => {
 
   textDescription.addEventListener('input', () => {
     let textComment = textDescription.value;
-    validateComment(textComment);
-    // console.log(validateComment(textComment));
     checkStatusInFocus(textDescription);
+
+    // console.log(validateComment(textComment));
+    validateComment(textComment);
   });
 };
 
 const validateComment = (comment) => {
   const MAX_STRING_LENGTH = 140;
+  BOOL_SUBMIT_STATUS_COMMENT = true;
   if (comment.length > MAX_STRING_LENGTH) {
     console.log('длина комментария не может составлять больше 140 символов');
-    return false;
+    BOOL_SUBMIT_STATUS_COMMENT = false;
   }
-  return true;
 };
+
+// работа с кнопкой отправки
+// ???????????? как отменить отправку формы?????
+let checkAndSumbitInfo = () => {
+  let submitButton = document.querySelector('#upload-submit');
+
+  submitButton.addEventListener('click', () => {
+    let sumbitStatus = BOOL_SUBMIT_STATUS_HASHTAG && BOOL_SUBMIT_STATUS_COMMENT;
+    if (sumbitStatus) {
+      console.log('ready to submit');
+    } else {
+      console.log('No');
+    }
+  });
+};
+
 
 collectUserHashtagInput();
 validateCommentInput();
+checkAndSumbitInfo();
+scaleImage();
 
 export {activateUploadImage};

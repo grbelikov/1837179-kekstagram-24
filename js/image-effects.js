@@ -37,10 +37,10 @@ const setSlider = (effectName) => {
   const effectLevelValue = document.querySelector('.effect-level__value');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
+  // Заглушка
   let sliderValue = 1;
-
+  console.log(effectName);
   const sliderEffectsDictionary = {
-    none:   'none',
     chrome: {
       'name': 'grayscale',
       'units': '',
@@ -63,7 +63,11 @@ const setSlider = (effectName) => {
     },
   };
 
-  // imgUploadPreview.style.filter = `${sliderEffectsDictionary[effectName].name}(${sliderValue}${sliderEffectsDictionary[effectName].units})`;
+  if (effectName === 'none') {
+    imgUploadPreview.style.filter = '';
+  } else {
+    imgUploadPreview.style.filter = `${sliderEffectsDictionary[effectName].name}(${sliderValue}${sliderEffectsDictionary[effectName].units})`;
+  }
 };
 
 // Эффекты на изображение

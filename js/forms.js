@@ -1,17 +1,17 @@
 import {setBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
 import {scaleImage} from './image-effects.js';
+import {removeBodyModalOpen} from './full-size-image.js';
 
 const errorMessages = {
-  errorMaxAmountHashtags: 'нельзя указать больше пяти хэш-тегов',
-  errorRepetitiveHashtah: 'имеются повторяющиеся хэштеги',
-  errorFirstSymbol:       'хэштег должен начинаться с #',
-  errorMinSymbols:        'хэштег не может состоять только из одной решётки',
-  errorMaxLengthHashtag:  'максимальная длина одного хэштега 20 символов',
-  errorWrongSymbols:      'хэштег может содержать только цифры, буквы и нижнее подчеркивание',
+  errorMaxAmountHashtags: 'Нельзя указать больше пяти хэш-тегов',
+  errorRepetitiveHashtah: 'Имеются повторяющиеся хэштеги',
+  errorFirstSymbol:       'Хэштег должен начинаться с #',
+  errorMinSymbols:        'Хэштег не может состоять только из одной решётки',
+  errorMaxLengthHashtag:  'Максимальная длина одного хэштега 20 символов',
+  errorWrongSymbols:      'Хэштег может содержать только цифры, буквы и нижнее подчеркивание',
 };
 
-//?????????????? как сбрасывать значение поля выбора файла #upload-file?
 const activateUploadImage = () => {
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
   const imgUploadInput = document.querySelector('#upload-file');
@@ -19,7 +19,7 @@ const activateUploadImage = () => {
   imgUploadInput.addEventListener('change', () => {
     setBodyModalOpen();
     imgUploadOverlay.classList.remove('hidden');
-
+    imgUploadInput.value = '';
   });
 };
 
@@ -65,21 +65,42 @@ const validateHashtagsArray = (hashtagValuesArray) => {
 };
 
 const collectUserHashtagInput = () => {
-  const textHashtags = document.querySelector('.text__hashtags');
+  const textHashtagsInput = document.querySelector('.text__hashtags');
 
-  textHashtags.addEventListener('input', () => {
+  textHashtagsInput.addEventListener('input', () => {
     let arrayHashtagsValues = [];
     // приводим к нижнему регистру
-    arrayHashtagsValues = textHashtags.value.toLowerCase().split(' ');
+    arrayHashtagsValues = textHashtagsInput.value.toLowerCase().split(' ');
 
     // отфильтровываем, чтобы не попадали пустые значения '' в случае нажатия на пробел
     arrayHashtagsValues = arrayHashtagsValues.filter(Boolean);
 
     validateHashtagsArray(arrayHashtagsValues);
+  });
+};
 
-    textHashtags.addEventListener('keydown', (evt) => {
-      evt.stopPropagation();
-    });
+const closeForm = () => {
+  const imgUploadCancel = document.querySelector('.img-upload__cancel'); // кнопка крестик для закрытия
+  const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+
+  const close = () => {
+    imgUploadOverlay.classList.add('hidden');
+    removeBodyModalOpen();
+  };
+
+  // Закрываем по крестику или кнопке ESC фулл фото
+  imgUploadCancel.addEventListener('click', () => {
+    close();
+  });
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) { // 27 = ESC
+      if ((document.activeElement.name === 'hashtags') || (document.activeElement.name === 'description')) {
+        evt.stopPropagation();
+      } else {
+        close();
+      }
+    }
   });
 };
 
@@ -109,9 +130,9 @@ const validateCommentInput = () => {
   });
 };
 
-
 collectUserHashtagInput();
 validateCommentInput();
 scaleImage();
+closeForm();
 
 export {activateUploadImage};

@@ -8,23 +8,6 @@ const removeBodyModalOpen = () => {
   document.body.classList.remove('modal-open');
 };
 
-const setupHideElement = (elementToClose, onClickObject, _inFocus=false) => {
-  // Закрываем по крестику или кнопке ESC фулл фото
-  document.addEventListener('keydown', (evt) => {
-    if ((evt.keyCode === 27) && (!_inFocus)) { // 27 = ESC
-      elementToClose.classList.add('hidden');
-
-      removeBodyModalOpen();
-    }
-  });
-
-  onClickObject.addEventListener('click', () => {
-    elementToClose.classList.add('hidden');
-
-    removeBodyModalOpen();
-  });
-};
-
 const addComments = (commentsArray) => {
   // Находим контент шаблона
   const contentComment = document.querySelector('#comment').content;
@@ -69,6 +52,7 @@ const setupFullImage = (objComment) => {
   const thumbnails = document.querySelectorAll('.picture__img');
   const likesElement = document.querySelectorAll('.picture__likes');
   const commentsElement = document.querySelectorAll('.picture__comments');
+  const pictureCancel = document.querySelector('#picture-cancel');
 
   for (let i = 0; i < thumbnails.length; i++) {
     thumbnails[i].addEventListener('click', () => {
@@ -85,8 +69,6 @@ const setupFullImage = (objComment) => {
       // Добавляем кол-во комментариев
       commentsCount.textContent = commentsElement[i].textContent;
 
-      // прячем классы social__comment-count и comments-loader, добавляя им
-      // класс hidden. С ними мы разберёмся позже, в другом домашнем задании
       socialCommentCount.classList.add('hidden');
       commentsLoader.classList.add('hidden');
 
@@ -94,10 +76,19 @@ const setupFullImage = (objComment) => {
       // чтобы контейнер с фотографиями позади не прокручивался
       setBodyModalOpen();
 
-      setupHideElement (
-        document.querySelector('.big-picture'),
-        document.querySelector('#picture-cancel'),
-      );
+      // Закрываем по крестику или кнопке ESC фулл фото
+      document.addEventListener('keydown', (evt) => {
+        if (evt.keyCode === 27) { // 27 = ESC
+          bigPictureSection.classList.add('hidden');
+          removeBodyModalOpen();
+        }
+      });
+
+      pictureCancel.addEventListener('click', () => {
+        bigPictureSection.classList.add('hidden');
+        removeBodyModalOpen();
+      });
+
       addComments(objComment[i]);
     });
   }
@@ -106,4 +97,3 @@ const setupFullImage = (objComment) => {
 export {setupFullImage};
 export {setBodyModalOpen};
 export {removeBodyModalOpen};
-export {setupHideElement};

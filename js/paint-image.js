@@ -1,6 +1,6 @@
 import {setupFullImage} from './full-size-image.js';
 
-const createTemplate = (commentsArray) => {
+const addContentToTemplate = (commentsArray) => {
   const fragment = document.createDocumentFragment();
 
   // Контейнер для комментариев
@@ -32,4 +32,4 @@ const createTemplate = (commentsArray) => {
   setupFullImage(commentsArray);
 };
 
-export {createTemplate};
+export {addContentToTemplate};

@@ -1,5 +1,4 @@
 import {setBodyModalOpen} from './full-size-image.js';
-import {removeHiddenTag} from './full-size-image.js';
 import {hideElement} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
 import {scaleImage} from './image-effects.js';
@@ -21,14 +20,15 @@ const checkStatusInFocus = (elemToCheckFocus) => {
   const imgUploadCancel = document.querySelector('.img-upload__cancel');
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
-  elemToCheckFocus.onfocus = () => {
+  elemToCheckFocus.addEventListener('focus', () => {
     hideElement(imgUploadOverlay, imgUploadCancel, true);
-    console.log('hashtag');
-  };
-  elemToCheckFocus.onblur = () => {
+    // console.log('hashtag');
+  });
+
+  elemToCheckFocus.addEventListener('blur', () => {
     hideElement(imgUploadOverlay, imgUploadCancel, false);
-    console.log('comment');
-  };
+    // console.log('comment');
+  });
 };
 
 //?????????????? как сбрасывать значение поля выбора файла #upload-file?
@@ -39,7 +39,7 @@ const activateUploadImage = () => {
 
   imgUploadInput.addEventListener('change', () => {
     setBodyModalOpen();
-    removeHiddenTag(imgUploadOverlay);
+    imgUploadOverlay.classList.remove('hidden');
 
     checkStatusInFocus(textHashtags);
   });

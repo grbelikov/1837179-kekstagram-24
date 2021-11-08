@@ -1,13 +1,3 @@
-// Функция делает класс невидимым, добавляя тег hidden
-const addHiddenTag = (className) => {
-  className.classList.add('hidden');
-};
-
-// Функция делает класс видимым, удаляя тег hidden
-const removeHiddenTag = (className) => {
-  className.classList.remove('hidden');
-};
-
 // Функция задаёт body класс modal-open чтобы не прокручивался фон
 const setBodyModalOpen = () => {
   document.body.classList.add('modal-open');
@@ -22,13 +12,15 @@ const hideElement = (elementToClose, onClickObject, _inFocus=false) => {
   // Закрываем по крестику или кнопке ESC фулл фото
   document.addEventListener('keydown', (evt) => {
     if ((evt.keyCode === 27) && (!_inFocus)) { // 27 = ESC
-      addHiddenTag(elementToClose);
+      elementToClose.classList.add('hidden');
+
       removeBodyModalOpen();
     }
   });
 
   onClickObject.addEventListener('click', () => {
-    addHiddenTag(elementToClose);
+    elementToClose.classList.add('hidden');
+
     removeBodyModalOpen();
   });
 };
@@ -81,7 +73,7 @@ const setupFullImage = (objComment) => {
   for (let i = 0; i < thumbnails.length; i++) {
     thumbnails[i].addEventListener('click', () => {
       // Удаляем класс hidden при клике, чтобы открылась полная версия картинки
-      removeHiddenTag(bigPictureSection);
+      bigPictureSection.classList.remove('hidden');
 
       // Добавляем ссыль из миниатюры в полную версию
       bigPictureImg.src = thumbnails[i].src;
@@ -95,8 +87,8 @@ const setupFullImage = (objComment) => {
 
       // прячем классы social__comment-count и comments-loader, добавляя им
       // класс hidden. С ними мы разберёмся позже, в другом домашнем задании
-      addHiddenTag(socialCommentCount);
-      addHiddenTag(commentsLoader);
+      socialCommentCount.classList.add('hidden');
+      commentsLoader.classList.add('hidden');
 
       // Добавляем или убираем у тега body класс modal-open,
       // чтобы контейнер с фотографиями позади не прокручивался
@@ -114,6 +106,4 @@ const setupFullImage = (objComment) => {
 export {setupFullImage};
 export {setBodyModalOpen};
 export {removeBodyModalOpen};
-export {addHiddenTag};
-export {removeHiddenTag};
 export {hideElement};

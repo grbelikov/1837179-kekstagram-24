@@ -2,10 +2,8 @@ import {setupFullImage} from './full-size-image.js';
 
 const addContentToTemplate = (commentsArray) => {
   const fragment = document.createDocumentFragment();
-
   // Контейнер для комментариев
   const blockPastPictures = document.querySelector('.pictures');
-
   // Находим контент шаблона
   const contentPicture = document.querySelector('#picture').content;
   const elementPicture = contentPicture.querySelector('.picture');

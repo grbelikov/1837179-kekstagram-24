@@ -34,12 +34,12 @@ const scaleImage = () => {
 
 // Слайдер
 const setSlider = (effectName) => {
-  const effectLevelValue = document.querySelector('.effect-level__value');
+  // const effectLevelValue = document.querySelector('.effect-level__value');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
   // Заглушка
-  let sliderValue = 1;
-  console.log(effectName);
+  const sliderValue = 1;
+  // console.log(effectName);
   const sliderEffectsDictionary = {
     chrome: {
       'name': 'grayscale',

@@ -1,5 +1,4 @@
 import {setBodyModalOpen} from './full-size-image.js';
-import {hideElement} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
 import {scaleImage} from './image-effects.js';
 
@@ -12,36 +11,15 @@ const errorMessages = {
   errorWrongSymbols:      'хэштег может содержать только цифры, буквы и нижнее подчеркивание',
 };
 
-// работы с полем хэштег
-// ??????????????????????????????????????
-const checkStatusInFocus = (elemToCheckFocus) => {
-  // если в фокусе поле с хэштегом, убираем закрытие по кнопке ESC
-  // p.s. не работает. не понимаю, как реализовать.
-  const imgUploadCancel = document.querySelector('.img-upload__cancel');
-  const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-
-  elemToCheckFocus.addEventListener('focus', () => {
-    hideElement(imgUploadOverlay, imgUploadCancel, true);
-    // console.log('hashtag');
-  });
-
-  elemToCheckFocus.addEventListener('blur', () => {
-    hideElement(imgUploadOverlay, imgUploadCancel, false);
-    // console.log('comment');
-  });
-};
-
 //?????????????? как сбрасывать значение поля выбора файла #upload-file?
 const activateUploadImage = () => {
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
   const imgUploadInput = document.querySelector('#upload-file');
-  const textHashtags = document.querySelector('.text__hashtags');
 
   imgUploadInput.addEventListener('change', () => {
     setBodyModalOpen();
     imgUploadOverlay.classList.remove('hidden');
 
-    checkStatusInFocus(textHashtags);
   });
 };
 
@@ -80,8 +58,8 @@ const validateHashtagsArray = (hashtagValuesArray) => {
       if (validateStringToUnacceptableSymbols(element)) {
         submitButton.setCustomValidity(errorMessages.errorWrongSymbols);
       }
-// ?????? почему-то не работает на ходу
-      // submitButton.reportValidity();
+    // ?????? почему-то не работает на ходу
+    // submitButton.reportValidity();
     });
   });
 };
@@ -98,6 +76,10 @@ const collectUserHashtagInput = () => {
     arrayHashtagsValues = arrayHashtagsValues.filter(Boolean);
 
     validateHashtagsArray(arrayHashtagsValues);
+
+    textHashtags.addEventListener('keydown', (evt) => {
+      evt.stopPropagation();
+    });
   });
 };
 
@@ -112,8 +94,8 @@ const validateComment = (comment) => {
     if (comment.length > MAX_STRING_LENGTH) {
       submitButton.setCustomValidity(errorMessageLengthComment);
     }
-// ?????? почему-то не работает на ходу
-      // submitButton.reportValidity();
+    // ?????? почему-то не работает на ходу
+    // submitButton.reportValidity();
   });
 };
 
@@ -122,7 +104,6 @@ const validateCommentInput = () => {
 
   textDescription.addEventListener('input', () => {
     const textComment = textDescription.value;
-    checkStatusInFocus(textDescription);
 
     validateComment(textComment);
   });

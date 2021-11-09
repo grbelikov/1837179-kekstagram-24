@@ -1,15 +1,15 @@
-function createTemplate(objectComment) {
-  const fragment = document.createDocumentFragment();
+import {setupFullImage} from './full-size-image.js';
 
+const addContentToTemplate = (commentsArray) => {
+  const fragment = document.createDocumentFragment();
   // Контейнер для комментариев
   const blockPastPictures = document.querySelector('.pictures');
-
   // Находим контент шаблона
   const contentPicture = document.querySelector('#picture').content;
   const elementPicture = contentPicture.querySelector('.picture');
 
   // Пишем переданные значения
-  objectComment.forEach((comment) => {
+  commentsArray.forEach((comment) => {
     // делаем копию шаблона
     const infoPicturesTemplate = elementPicture.cloneNode(true);
 
@@ -19,6 +19,7 @@ function createTemplate(objectComment) {
     const likesPicture = infoPicturesTemplate.querySelector('.picture__likes');
 
     imgPicture.src = comment.url;
+    imgPicture.alt = comment.description;
     commentsPicture.textContent = comment.comments.length;
     likesPicture.textContent = comment.likes;
 
@@ -26,6 +27,7 @@ function createTemplate(objectComment) {
   });
 
   blockPastPictures.appendChild(fragment);
-}
+  setupFullImage(commentsArray);
+};
 
-export {createTemplate};
+export {addContentToTemplate};

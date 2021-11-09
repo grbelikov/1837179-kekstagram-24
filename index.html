@@ -30,7 +30,13 @@
       <section class="img-upload">
         <div class="img-upload__wrapper">
           <h2 class="img-upload__title  visually-hidden">Загрузка фотографии</h2>
-          <form class="img-upload__form" id="upload-select-image" method="post" enctype="multipart/form-data" autocomplete="off">
+          <form
+            class="img-upload__form"
+            action="https://24.javascript.pages.academy/kekstagram/"
+            id="upload-select-image"
+            method="post"
+            enctype="multipart/form-data"
+            autocomplete="off">
 
             <!-- Изначальное состояние поля для загрузки изображения -->
             <fieldset class="img-upload__start">
@@ -40,13 +46,15 @@
 
             <!-- Форма редактирования изображения -->
             <div class="img-upload__overlay  hidden">
+            <!-- <div class="img-upload__overlay"> -->
+
               <div class="img-upload__wrapper">
                 <div class="img-upload__preview-container">
 
                   <!-- Изменение размера изображения -->
                   <fieldset class="img-upload__scale  scale">
                     <button type="button" class="scale__control  scale__control--smaller">Уменьшить</button>
-                    <input type="text" class="scale__control  scale__control--value" value="55%" title="Image Scale" name="scale" readonly>
+                    <input type="text" class="scale__control  scale__control--value" value="100%" title="Image Scale" name="scale" readonly>
                     <button type="button" class="scale__control  scale__control--bigger">Увеличить</button>
                   </fieldset>
 
@@ -115,7 +123,7 @@
 
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
-                  <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
+                  <input type="text" class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
                   <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
                 </fieldset>
 
@@ -193,6 +201,17 @@
       </ul>
     </div>
   </footer>
+
+<!-- Шаблон комментария -->
+  <template id="comment">
+    <li class="social__comment">
+      <img class="social__picture"
+        src="" alt=""
+        width="35"
+        height="35">
+      <p class="social__text"></p>
+    </li>
+  </template>
 
   <!-- Шаблон изображения случайного пользователя -->
   <template id="picture">

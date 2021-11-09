@@ -69,7 +69,7 @@ const filterAndCollectInputHashtag = () => {
   });
 };
 
-const closeForm = () => {
+const setupCloseEvents = () => {
   const imgUploadCancel = document.querySelector('.img-upload__cancel'); // кнопка крестик для закрытия
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
@@ -134,7 +134,7 @@ const activateUploadImage = () => {
   filterAndCollectInputHashtag();
   collectCommentInput();
   editScaleImage();
-  closeForm();
+  setupCloseEvents();
 };
 
 export {activateUploadImage};

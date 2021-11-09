@@ -19,7 +19,6 @@ const activateUploadImage = () => {
   imgUploadInput.addEventListener('change', () => {
     setBodyModalOpen();
     imgUploadOverlay.classList.remove('hidden');
-    imgUploadInput.value = '';
   });
 };
 
@@ -86,6 +85,7 @@ const closeForm = () => {
   const close = () => {
     imgUploadOverlay.classList.add('hidden');
     removeBodyModalOpen();
+    document.querySelector('#upload-file').value = '';
   };
 
   // Закрываем по крестику или кнопке ESC фулл фото

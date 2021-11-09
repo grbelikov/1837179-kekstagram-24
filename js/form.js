@@ -1,6 +1,6 @@
 import {setBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
-import {scaleImage} from './image-effects.js';
+import {editScaleImage} from './image-effects.js';
 import {removeBodyModalOpen} from './full-size-image.js';
 
 const errorMessages = {
@@ -10,16 +10,6 @@ const errorMessages = {
   errorMinSymbols:        'Хэштег не может состоять только из одной решётки',
   errorMaxLengthHashtag:  'Максимальная длина одного хэштега 20 символов',
   errorWrongSymbols:      'Хэштег может содержать только цифры, буквы и нижнее подчеркивание',
-};
-
-const activateUploadImage = () => {
-  const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-  const imgUploadInput = document.querySelector('#upload-file');
-
-  imgUploadInput.addEventListener('change', () => {
-    setBodyModalOpen();
-    imgUploadOverlay.classList.remove('hidden');
-  });
 };
 
 const validateStringToUnacceptableSymbols = (stringToCheck) => {
@@ -34,28 +24,29 @@ const validateStringToUnacceptableSymbols = (stringToCheck) => {
 
 const validateHashtagsArray = (hashtagValuesArray) => {
   const submitButton = document.querySelector('#upload-submit');
+  const textHashtagsInput = document.querySelector('.text__hashtags');
 
   submitButton.addEventListener('click', () => {
-    submitButton.setCustomValidity('');
+    textHashtagsInput.setCustomValidity('');
 
     if (hashtagValuesArray.length > 5) {
-      submitButton.setCustomValidity(errorMessages.errorMaxAmountHashtags);
+      textHashtagsInput.setCustomValidity(errorMessages.errorMaxAmountHashtags);
     }
     if (hasDuplicates(hashtagValuesArray)) {
-      submitButton.setCustomValidity(errorMessages.errorRepetitiveHashtah);
+      textHashtagsInput.setCustomValidity(errorMessages.errorRepetitiveHashtah);
     }
 
     hashtagValuesArray.forEach((element) => {
       if (element[0] !== '#') {
-        submitButton.setCustomValidity(errorMessages.errorFirstSymbol);
+        textHashtagsInput.setCustomValidity(errorMessages.errorFirstSymbol);
       } else if (element.length < 2) {
-        submitButton.setCustomValidity(errorMessages.errorMinSymbols);
+        textHashtagsInput.setCustomValidity(errorMessages.errorMinSymbols);
       }
       if (element.length > 20) {
-        submitButton.setCustomValidity(errorMessages.errorMaxLengthHashtag);
+        textHashtagsInput.setCustomValidity(errorMessages.errorMaxLengthHashtag);
       }
       if (validateStringToUnacceptableSymbols(element)) {
-        submitButton.setCustomValidity(errorMessages.errorWrongSymbols);
+        textHashtagsInput.setCustomValidity(errorMessages.errorWrongSymbols);
       }
     // ?????? почему-то не работает на ходу
     // submitButton.reportValidity();
@@ -63,7 +54,7 @@ const validateHashtagsArray = (hashtagValuesArray) => {
   });
 };
 
-const collectUserHashtagInput = () => {
+const filterAndCollectInputHashtag = () => {
   const textHashtagsInput = document.querySelector('.text__hashtags');
 
   textHashtagsInput.addEventListener('input', () => {
@@ -88,7 +79,7 @@ const closeForm = () => {
     document.querySelector('#upload-file').value = '';
   };
 
-  // Закрываем по крестику или кнопке ESC фулл фото
+  // Закрываем по крестику или кнопке ESC форму
   imgUploadCancel.addEventListener('click', () => {
     close();
   });
@@ -105,7 +96,8 @@ const closeForm = () => {
 };
 
 // работы с полем комментария
-const validateComment = (comment) => {
+const validateCommentText = (comment) => {
+  const textDescription = document.querySelector('.text__description');
   const errorMessageLengthComment = 'Длина комментария не может составлять больше 140 символов';
   const submitButton = document.querySelector('#upload-submit');
 
@@ -113,26 +105,36 @@ const validateComment = (comment) => {
     const MAX_STRING_LENGTH = 140;
 
     if (comment.length > MAX_STRING_LENGTH) {
-      submitButton.setCustomValidity(errorMessageLengthComment);
+      textDescription.setCustomValidity(errorMessageLengthComment);
     }
     // ?????? почему-то не работает на ходу
     // submitButton.reportValidity();
   });
 };
 
-const validateCommentInput = () => {
+const collectCommentInput = () => {
   const textDescription = document.querySelector('.text__description');
 
   textDescription.addEventListener('input', () => {
     const textComment = textDescription.value;
 
-    validateComment(textComment);
+    validateCommentText(textComment);
   });
 };
 
-collectUserHashtagInput();
-validateCommentInput();
-scaleImage();
-closeForm();
+const activateUploadImage = () => {
+  const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+  const imgUploadInput = document.querySelector('#upload-file');
+
+  imgUploadInput.addEventListener('change', () => {
+    setBodyModalOpen();
+    imgUploadOverlay.classList.remove('hidden');
+  });
+
+  filterAndCollectInputHashtag();
+  collectCommentInput();
+  editScaleImage();
+  closeForm();
+};
 
 export {activateUploadImage};

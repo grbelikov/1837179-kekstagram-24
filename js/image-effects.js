@@ -1,7 +1,7 @@
 // эффекты
 
 // Масштаб изображения
-const scaleImage = () => {
+const editScaleImage = () => {
   const scaleControlValue = document.querySelector('.scale__control--value');
   const scaleControlSmaller = document.querySelector('.scale__control--smaller');
   const scaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -32,7 +32,7 @@ const scaleImage = () => {
 };
 
 // Слайдер
-const setSlider = (effectName) => {
+const setupSlider = (effectName) => {
   // const effectLevelValue = document.querySelector('.effect-level__value');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
@@ -70,7 +70,7 @@ const setSlider = (effectName) => {
 };
 
 // Эффекты на изображение
-const effectsToImage = () => {
+const imageEffects = () => {
   const effectsRadio = document.querySelectorAll('.effects__radio');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
@@ -89,11 +89,11 @@ const effectsToImage = () => {
         cssNameEffect = cssNameEffect + cssName;
         imgUploadPreview.classList.add(cssNameEffect);
       }
-      setSlider(cssName);
+      setupSlider(cssName);
     });
   });
 };
 
-effectsToImage();
+imageEffects();
 
-export {scaleImage};
+export {editScaleImage};

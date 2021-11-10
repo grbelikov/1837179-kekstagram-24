@@ -1,18 +1,17 @@
 import {MAX_DISPLAYED_COMMENTS} from './consts.js';
 
 const showFirstComments = (socialCommentsAll) => {
-  // отображаем только первые maxAmountComments комментариев, остальные прячем.
+  // отображаем только первые MAX_DISPLAYED_COMMENTS комментариев, остальные прячем
   for (let i = MAX_DISPLAYED_COMMENTS; i < socialCommentsAll.length; i++) {
     socialCommentsAll[i].classList.add('hidden');
   }
 };
 
-// показывать больше комментариев при нажатии на кнопку Загрузить еще
-const showMoreComments = () => {
+// показывать больше комментариев при нажатии на кнопку 'Загрузить еще'
+const setupShowingCommentsByClick = () => {
   // кнопка Загрузить еще
   const commentsLoaderButton = document.querySelector('.comments-loader');
   // ищем все скрытые комментарии
-
   commentsLoaderButton.addEventListener('click', () => {
 
     // убираем тег hidden у следующих комментариев
@@ -32,5 +31,5 @@ const showMoreComments = () => {
   });
 };
 
-export {showMoreComments};
+export {setupShowingCommentsByClick};
 export {showFirstComments};

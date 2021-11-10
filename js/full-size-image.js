@@ -1,4 +1,5 @@
 import {showFirstComments} from './comments-update.js';
+import {setupShowingCommentsByClick} from './comments-update.js';
 
 // Функция задаёт body класс modal-open чтобы не прокручивался фон
 const setBodyModalOpen = () => {
@@ -99,6 +100,7 @@ const setupFullImage = (objComment) => {
       showFirstComments(socialCommentsArray);
     });
   }
+  setupShowingCommentsByClick();
 };
 
 export {setupFullImage};

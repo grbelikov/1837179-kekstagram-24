@@ -15,7 +15,7 @@ const createArrayObject = () => {
   });
 
   // Создаем в цикле 25 объектов с заданной структурой
-  for (let i=1; i<=SIMILAR_COMMENT_COUNT; i++) {
+  for (let i=1; i <= SIMILAR_COMMENT_COUNT; i++) {
     const userObject = {
       id: i,
       url: `photos/${i}.jpg`,
@@ -25,7 +25,7 @@ const createArrayObject = () => {
     };
 
     // Добавляем произвольное количество комментариев в масссив comments
-    for (let k=0; k<(getRandomInteger(1, 8)); k++) {
+    for (let k=0; k<(getRandomInteger(6, 25)); k++) {
       userObject.comments.push(createCommentObject(i, k));
     }
 

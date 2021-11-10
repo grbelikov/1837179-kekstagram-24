@@ -1,3 +1,5 @@
+import {showFirstComments} from './comments-update.js';
+
 // Функция задаёт body класс modal-open чтобы не прокручивался фон
 const setBodyModalOpen = () => {
   document.body.classList.add('modal-open');
@@ -46,8 +48,7 @@ const setupFullImage = (objComment) => {
 
   const commentsCount = document.querySelector('.comments-count');
   const socialCaption = document.querySelector('.social__caption');
-  const socialCommentCount = document.querySelector('.social__comment-count');
-  const commentsLoader = document.querySelector('.comments-loader');
+  // const socialCommentCount = document.querySelector('.social__comment-count');
 
   const thumbnails = document.querySelectorAll('.picture__img');
   const likesElement = document.querySelectorAll('.picture__likes');
@@ -69,9 +70,6 @@ const setupFullImage = (objComment) => {
       // Добавляем кол-во комментариев
       commentsCount.textContent = commentsElement[i].textContent;
 
-      socialCommentCount.classList.add('hidden');
-      commentsLoader.classList.add('hidden');
-
       // Добавляем или убираем у тега body класс modal-open,
       // чтобы контейнер с фотографиями позади не прокручивался
       setBodyModalOpen();
@@ -90,6 +88,15 @@ const setupFullImage = (objComment) => {
       });
 
       addComments(objComment[i]);
+
+      // добавляем кнопку 'Загрузить ещё', если вдруг она пропала в comments-update
+      const commentsLoaderHidden = document.querySelector('.comments-loader.hidden');
+      if (commentsLoaderHidden) {
+        commentsLoaderHidden.classList.remove('hidden');
+      }
+      // отображаем только первые 5 комментариев, остальные прячем.
+      const socialCommentsArray = document.querySelectorAll('.social__comment');
+      showFirstComments(socialCommentsArray);
     });
   }
 };

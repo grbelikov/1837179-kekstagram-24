@@ -1,6 +1,6 @@
 import {setBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
-import {editScaleImage} from './image-effects.js';
+import {setupImageScale} from './image-effects.js';
 import {removeBodyModalOpen} from './full-size-image.js';
 
 const errorMessages = {
@@ -54,7 +54,7 @@ const validateHashtagsArray = (hashtagValuesArray) => {
   });
 };
 
-const filterAndCollectInputHashtag = () => {
+const setupInputHashTag = () => {
   const textHashtagsInput = document.querySelector('.text__hashtags');
 
   textHashtagsInput.addEventListener('input', () => {
@@ -112,7 +112,7 @@ const validateCommentText = (comment) => {
   });
 };
 
-const collectCommentInput = () => {
+const setupInputComment = () => {
   const textDescription = document.querySelector('.text__description');
 
   textDescription.addEventListener('input', () => {
@@ -131,9 +131,9 @@ const activateUploadImage = () => {
     imgUploadOverlay.classList.remove('hidden');
   });
 
-  filterAndCollectInputHashtag();
-  collectCommentInput();
-  editScaleImage();
+  setupInputHashTag();
+  setupInputComment();
+  setupImageScale();
   setupCloseEvents();
 };
 

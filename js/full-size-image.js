@@ -46,7 +46,7 @@ const setupFullImage = (objComment) => {
   const bigPictureImg = document.querySelector('.big-picture__img img');
   const likesCounter = document.querySelector('.likes-count');
 
-  const commentsCount = document.querySelector('.comments-count');
+  const commentsCount = document.querySelector('.social__comment-count');
   const socialCaption = document.querySelector('.social__caption');
   // const socialCommentCount = document.querySelector('.social__comment-count');
 
@@ -68,7 +68,7 @@ const setupFullImage = (objComment) => {
       // Добавляем кол-во лайков
       likesCounter.textContent = likesElement[i].textContent;
       // Добавляем кол-во комментариев
-      commentsCount.textContent = commentsElement[i].textContent;
+      commentsCount.textContent = `3 из ${commentsElement[i].textContent} комментариев`;
 
       // Добавляем или убираем у тега body класс modal-open,
       // чтобы контейнер с фотографиями позади не прокручивался

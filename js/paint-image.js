@@ -12,7 +12,6 @@ const addContentToTemplate = (commentsArray) => {
   commentsArray.forEach((comment) => {
     // делаем копию шаблона
     const infoPicturesTemplate = elementPicture.cloneNode(true);
-
     // Находим в шаблоне picture нужные элементы
     const imgPicture = infoPicturesTemplate.querySelector('.picture__img');
     const commentsPicture = infoPicturesTemplate.querySelector('.picture__comments');

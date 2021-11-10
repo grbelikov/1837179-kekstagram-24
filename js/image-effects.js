@@ -1,8 +1,7 @@
-
 // эффекты
 
 // Масштаб изображения
-const scaleImage = () => {
+const editScaleImage = () => {
   const scaleControlValue = document.querySelector('.scale__control--value');
   const scaleControlSmaller = document.querySelector('.scale__control--smaller');
   const scaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -33,7 +32,7 @@ const scaleImage = () => {
 };
 
 // Слайдер
-const setSlider = (effectName) => {
+const setupSlider = (effectName) => {
   // const effectLevelValue = document.querySelector('.effect-level__value');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
@@ -71,7 +70,7 @@ const setSlider = (effectName) => {
 };
 
 // Эффекты на изображение
-const effectsToImage = () => {
+const imageEffects = () => {
   const effectsRadio = document.querySelectorAll('.effects__radio');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
@@ -90,20 +89,11 @@ const effectsToImage = () => {
         cssNameEffect = cssNameEffect + cssName;
         imgUploadPreview.classList.add(cssNameEffect);
       }
-      setSlider(cssName);
+      setupSlider(cssName);
     });
   });
 };
 
+imageEffects();
 
-effectsToImage();
-
-export {scaleImage};
-
-
-// Для эффекта «Хром» — filter: grayscale(0..1) с шагом 0.1;
-// Для эффекта «Сепия» — filter: sepia(0..1) с шагом 0.1;
-// Для эффекта «Марвин» — filter: invert(0..100%) с шагом 1%;
-// Для эффекта «Фобос» — filter: blur(0..3px) с шагом 0.1px;
-// Для эффекта «Зной» — filter: brightness(1..3) с шагом 0.1;
-// Для эффекта «Оригинал» CSS-стили filter удаляются.
+export {editScaleImage};

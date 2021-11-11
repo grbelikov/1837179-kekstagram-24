@@ -1,36 +1,5 @@
 // эффекты
 
-// Масштаб изображения
-const setupImageScale = () => {
-  const scaleControlValue = document.querySelector('.scale__control--value');
-  const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-  const scaleControlBigger = document.querySelector('.scale__control--bigger');
-  const imgUploadPreview = document.querySelector('.img-upload__preview');
-  let intScaleControlValue = +(scaleControlValue.value.slice(0, -1));
-
-  scaleControlSmaller.addEventListener('click', () => {
-    if (intScaleControlValue >= 25) {
-      intScaleControlValue -= 25;
-    }
-    if (intScaleControlValue < 25) {
-      intScaleControlValue = 25;
-    }
-    scaleControlValue.value = intScaleControlValue;
-    imgUploadPreview.style.transform = `scale(${intScaleControlValue/100})`;
-  });
-
-  scaleControlBigger.addEventListener('click', () => {
-    if (intScaleControlValue <= 75) {
-      intScaleControlValue += 25;
-    }
-    if (intScaleControlValue > 75) {
-      intScaleControlValue = 100;
-    }
-    scaleControlValue.value = intScaleControlValue;
-    imgUploadPreview.style.transform = `scale(${scaleControlValue.value/100})`;
-  });
-};
-
 // Слайдер
 const setupSlider = (effectName) => {
   // const effectLevelValue = document.querySelector('.effect-level__value');
@@ -94,6 +63,38 @@ const imageEffects = () => {
   });
 };
 
-imageEffects();
+
+// Масштаб изображения
+const setupImageScale = () => {
+  const scaleControlValue = document.querySelector('.scale__control--value');
+  const scaleControlSmaller = document.querySelector('.scale__control--smaller');
+  const scaleControlBigger = document.querySelector('.scale__control--bigger');
+  const imgUploadPreview = document.querySelector('.img-upload__preview');
+  let intScaleControlValue = +(scaleControlValue.value.slice(0, -1));
+
+  scaleControlSmaller.addEventListener('click', () => {
+    if (intScaleControlValue >= 25) {
+      intScaleControlValue -= 25;
+    }
+    if (intScaleControlValue < 25) {
+      intScaleControlValue = 25;
+    }
+    scaleControlValue.value = intScaleControlValue;
+    imgUploadPreview.style.transform = `scale(${intScaleControlValue/100})`;
+  });
+
+  scaleControlBigger.addEventListener('click', () => {
+    if (intScaleControlValue <= 75) {
+      intScaleControlValue += 25;
+    }
+    if (intScaleControlValue > 75) {
+      intScaleControlValue = 100;
+    }
+    scaleControlValue.value = intScaleControlValue;
+    imgUploadPreview.style.transform = `scale(${scaleControlValue.value/100})`;
+  });
+  imageEffects();
+};
+
 
 export {setupImageScale};

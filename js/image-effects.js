@@ -1,12 +1,7 @@
 // эффекты
-
-// Слайдер
-const setupSlider = (effectName) => {
-  // const effectLevelValue = document.querySelector('.effect-level__value');
+const setupSlider = (effectName, sliderValue) => {
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
-  // Заглушка
-  const sliderValue = 1;
   // console.log(effectName);
   const sliderEffectsDictionary = {
     chrome: {
@@ -41,28 +36,78 @@ const setupSlider = (effectName) => {
 // Эффекты на изображение
 const imageEffects = () => {
   const effectsRadio = document.querySelectorAll('.effects__radio');
+  // const effectLevelValue = document.querySelector('.effect-level__value');
+  const sliderElement = document.querySelector('.level-form__slider');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
-  effectsRadio.forEach((effect) => {
-    effect.addEventListener('click', () => {
+  noUiSlider.create(sliderElement, {
+    range: {min: 0, max: 100},
+    start: 80,
+    step: 1,
+    connect: 'lower',
+  });
+  const sliderElementContainer = document.querySelector('.effect-level__slider');
+  sliderElementContainer.classList.add('hidden');
 
+  effectsRadio.forEach((effect) => {
+
+    effect.addEventListener('click', () => {
       let cssNameEffect = 'effects__preview--';
 
       imgUploadPreview.className = 'img-upload__preview';
 
       let cssName = effect.id.split('-');
       cssName = cssName[cssName.length-1];
-
       if (cssName !== 'none') {
-        // console.log(cssName);
+        if (sliderElementContainer.classList.contains('hidden')) {
+          sliderElementContainer.classList.remove('hidden');
+        }
         cssNameEffect = cssNameEffect + cssName;
         imgUploadPreview.classList.add(cssNameEffect);
+      } else {
+        if (!sliderElementContainer.classList.contains('hidden')) {
+          sliderElementContainer.classList.add('hidden');
+        }
       }
-      setupSlider(cssName);
+
+      if ((cssName === 'chrome') || (cssName === 'sepia')) {
+        sliderElement.noUiSlider.updateOptions({
+          range: {min: 0, max: 1},
+          start: 1,
+          step: 0.1,
+        });
+      }
+      if (cssName === 'marvin') {
+        sliderElement.noUiSlider.updateOptions({
+          range: {min: 0, max: 100},
+          start: 100,
+          step: 1,
+        });
+      }
+      if (cssName === 'phobos') {
+        sliderElement.noUiSlider.updateOptions({
+          range: {min: 0, max: 3},
+          start: 3,
+          step: 0.1,
+        });
+      }
+      if (cssName === 'heat') {
+        sliderElement.noUiSlider.updateOptions({
+          range: {min: 1, max: 3},
+          start: 3,
+          step: 0.1,
+        });
+      }
+
+      let effectLevelValue;
+      sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
+        effectLevelValue = unencoded[handle];
+        setupSlider(cssName, effectLevelValue);
+      });
+
     });
   });
 };
-
 
 // Масштаб изображения
 const setupImageScale = () => {
@@ -93,6 +138,7 @@ const setupImageScale = () => {
     scaleControlValue.value = intScaleControlValue;
     imgUploadPreview.style.transform = `scale(${scaleControlValue.value/100})`;
   });
+  // createSliderVal();
   imageEffects();
 };
 

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="./nouislider/nouislider.css">
+
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кекстаграм</title>
 </head>
@@ -66,7 +68,13 @@
                   <!-- Изменение глубины эффекта, накладываемого на изображение -->
                   <fieldset class="img-upload__effect-level  effect-level">
                     <input class="effect-level__value" type="number" step="any" name="effect-level" value="">
-                    <div class="effect-level__slider"></div>
+
+                    <div class="effect-level__slider">
+                      <form class="level-form">
+                        <div class="level-form__slider" id="slider"></div>
+                      </form>
+                    </div>
+
                   </fieldset>
 
                   <!-- Кнопка для закрытия формы редактирования изображения -->
@@ -250,5 +258,6 @@
   </template>
 
   <script src="js/main.js" type="module"></script>
+  <script src="./nouislider/nouislider.js"></script>
 </body>
 </html>

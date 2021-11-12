@@ -1,6 +1,7 @@
 // эффекты
 const setupSlider = (effectName, sliderValue) => {
   const imgUploadPreview = document.querySelector('.img-upload__preview');
+  const effectLevelValue = document.querySelector('.effect-level__value');
 
   // console.log(effectName);
   const sliderEffectsDictionary = {
@@ -31,12 +32,12 @@ const setupSlider = (effectName, sliderValue) => {
   } else {
     imgUploadPreview.style.filter = `${sliderEffectsDictionary[effectName].name}(${sliderValue}${sliderEffectsDictionary[effectName].units})`;
   }
+  effectLevelValue.value = sliderValue;
 };
 
 // Эффекты на изображение
 const imageEffects = () => {
   const effectsRadio = document.querySelectorAll('.effects__radio');
-  // const effectLevelValue = document.querySelector('.effect-level__value');
   const sliderElement = document.querySelector('.level-form__slider');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
@@ -50,7 +51,6 @@ const imageEffects = () => {
   sliderElementContainer.classList.add('hidden');
 
   effectsRadio.forEach((effect) => {
-
     effect.addEventListener('click', () => {
       let cssNameEffect = 'effects__preview--';
 
@@ -69,7 +69,6 @@ const imageEffects = () => {
           sliderElementContainer.classList.add('hidden');
         }
       }
-
       if ((cssName === 'chrome') || (cssName === 'sepia')) {
         sliderElement.noUiSlider.updateOptions({
           range: {min: 0, max: 1},
@@ -104,7 +103,6 @@ const imageEffects = () => {
         effectLevelValue = unencoded[handle];
         setupSlider(cssName, effectLevelValue);
       });
-
     });
   });
 };
@@ -114,8 +112,13 @@ const setupImageScale = () => {
   const scaleControlValue = document.querySelector('.scale__control--value');
   const scaleControlSmaller = document.querySelector('.scale__control--smaller');
   const scaleControlBigger = document.querySelector('.scale__control--bigger');
-  const imgUploadPreview = document.querySelector('.img-upload__preview');
+  const imgUploadPreviewImg = document.querySelector('.img-upload__preview img');
   let intScaleControlValue = +(scaleControlValue.value.slice(0, -1));
+
+  const setScaleValues = () => {
+    scaleControlValue.value = `${intScaleControlValue}%`;
+    imgUploadPreviewImg.style.transform = `scale(${intScaleControlValue/100})`;
+  };
 
   scaleControlSmaller.addEventListener('click', () => {
     if (intScaleControlValue >= 25) {
@@ -124,8 +127,7 @@ const setupImageScale = () => {
     if (intScaleControlValue < 25) {
       intScaleControlValue = 25;
     }
-    scaleControlValue.value = intScaleControlValue;
-    imgUploadPreview.style.transform = `scale(${intScaleControlValue/100})`;
+    setScaleValues();
   });
 
   scaleControlBigger.addEventListener('click', () => {
@@ -135,12 +137,9 @@ const setupImageScale = () => {
     if (intScaleControlValue > 75) {
       intScaleControlValue = 100;
     }
-    scaleControlValue.value = intScaleControlValue;
-    imgUploadPreview.style.transform = `scale(${scaleControlValue.value/100})`;
+    setScaleValues();
   });
-  // createSliderVal();
   imageEffects();
 };
-
 
 export {setupImageScale};

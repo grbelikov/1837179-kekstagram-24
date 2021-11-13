@@ -1,5 +1,7 @@
 import {showFirstComments} from './comments-update.js';
 import {setupShowingCommentsByClick} from './comments-update.js';
+import {MAX_DISPLAYED_COMMENTS} from './consts.js';
+import {ESC_KEYBUTTON} from './consts.js';
 
 // Функция задаёт body класс modal-open чтобы не прокручивался фон
 const setBodyModalOpen = () => {
@@ -69,7 +71,7 @@ const setupFullImage = (objComment) => {
       // Добавляем кол-во лайков
       likesCounter.textContent = likesElement[i].textContent;
       // Добавляем кол-во комментариев
-      commentsCount.textContent = `3 из ${commentsElement[i].textContent} комментариев`;
+      commentsCount.textContent = `${MAX_DISPLAYED_COMMENTS} из ${commentsElement[i].textContent} комментариев`;
 
       // Добавляем или убираем у тега body класс modal-open,
       // чтобы контейнер с фотографиями позади не прокручивался
@@ -77,7 +79,7 @@ const setupFullImage = (objComment) => {
 
       // Закрываем по крестику или кнопке ESC фулл фото
       document.addEventListener('keydown', (evt) => {
-        if (evt.keyCode === 27) { // 27 = ESC
+        if (evt.keyCode === ESC_KEYBUTTON) { // 27 = ESC
           bigPictureSection.classList.add('hidden');
           removeBodyModalOpen();
         }

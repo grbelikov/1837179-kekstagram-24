@@ -32,6 +32,7 @@ const createArrayObject = () => {
     generatedObjectsArray.push(userObject);
   }
 
+  console.log(generatedObjectsArray[0]);
   return generatedObjectsArray;
 };
 

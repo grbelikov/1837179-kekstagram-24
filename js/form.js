@@ -2,15 +2,7 @@ import {setBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
 import {setupImageScale} from './image-effects.js';
 import {removeBodyModalOpen} from './full-size-image.js';
-
-const errorMessages = {
-  errorMaxAmountHashtags: 'Нельзя указать больше пяти хэш-тегов',
-  errorRepetitiveHashtah: 'Имеются повторяющиеся хэштеги',
-  errorFirstSymbol:       'Хэштег должен начинаться с #',
-  errorMinSymbols:        'Хэштег не может состоять только из одной решётки',
-  errorMaxLengthHashtag:  'Максимальная длина одного хэштега 20 символов',
-  errorWrongSymbols:      'Хэштег может содержать только цифры, буквы и нижнее подчеркивание',
-};
+import {ERROR_MESSAGES, MAX_STRING_LENGTH} from './consts.js';
 
 const validateStringToUnacceptableSymbols = (stringToCheck) => {
   // У нас существует другая проверка на первый символ === #, так что отсечем его.
@@ -30,23 +22,23 @@ const validateHashtagsArray = (hashtagValuesArray) => {
     textHashtagsInput.setCustomValidity('');
 
     if (hashtagValuesArray.length > 5) {
-      textHashtagsInput.setCustomValidity(errorMessages.errorMaxAmountHashtags);
+      textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxAmountHashtags);
     }
     if (hasDuplicates(hashtagValuesArray)) {
-      textHashtagsInput.setCustomValidity(errorMessages.errorRepetitiveHashtah);
+      textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorRepetitiveHashtah);
     }
 
     hashtagValuesArray.forEach((element) => {
       if (element[0] !== '#') {
-        textHashtagsInput.setCustomValidity(errorMessages.errorFirstSymbol);
+        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorFirstSymbol);
       } else if (element.length < 2) {
-        textHashtagsInput.setCustomValidity(errorMessages.errorMinSymbols);
+        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMinSymbols);
       }
       if (element.length > 20) {
-        textHashtagsInput.setCustomValidity(errorMessages.errorMaxLengthHashtag);
+        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxLengthHashtag);
       }
       if (validateStringToUnacceptableSymbols(element)) {
-        textHashtagsInput.setCustomValidity(errorMessages.errorWrongSymbols);
+        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorWrongSymbols);
       }
     // ?????? почему-то не работает на ходу
     // submitButton.reportValidity();
@@ -102,7 +94,6 @@ const validateCommentText = (comment) => {
   const submitButton = document.querySelector('#upload-submit');
 
   submitButton.addEventListener('click', () => {
-    const MAX_STRING_LENGTH = 140;
 
     if (comment.length > MAX_STRING_LENGTH) {
       textDescription.setCustomValidity(errorMessageLengthComment);

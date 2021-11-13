@@ -3,7 +3,6 @@ const setupSlider = (effectName, sliderValue) => {
   const imgUploadPreview = document.querySelector('.img-upload__preview');
   const effectLevelValue = document.querySelector('.effect-level__value');
 
-  // console.log(effectName);
   const sliderEffectsDictionary = {
     chrome: {
       'name': 'grayscale',

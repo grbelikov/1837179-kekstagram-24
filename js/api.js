@@ -3,6 +3,8 @@ import {showAlert} from './util.js';
 import {URL_GET_DATA} from './consts.js';
 import {ERROR_MESSAGES} from './consts.js';
 import {URL_POST_DATA} from './consts.js';
+import {showSuccessBanner} from './form.js';
+import {showErrorBanner} from './form.js';
 
 const createLoader = (onSuccess, onError) => () => fetch (URL_GET_DATA,
   {
@@ -42,8 +44,9 @@ const setUserFormSubmit = (onSuccess) => {
       .then((response) => {
         if (response.ok) {
           onSuccess();
+          showSuccessBanner();
         } else {
-          showAlert(ERROR_MESSAGES.errorFailedToSubmitForm);
+          showErrorBanner();
         }
       })
       .catch(() => {

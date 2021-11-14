@@ -94,11 +94,18 @@ const setupFullImage = (objComment) => {
 
       // добавляем кнопку 'Загрузить ещё', если вдруг она пропала в comments-update
       const commentsLoaderHidden = document.querySelector('.comments-loader.hidden');
+      const commentsLoader = document.querySelector('.comments-loader');
+
       if (commentsLoaderHidden) {
         commentsLoaderHidden.classList.remove('hidden');
       }
-      // отображаем только первые 5 комментариев, остальные прячем.
+
+      // отображаем только первые MAX_DISPLAYED_COMMENTS комментариев, остальные прячем.
       const socialCommentsArray = document.querySelectorAll('.social__comment');
+      if (socialCommentsArray.length <= MAX_DISPLAYED_COMMENTS) {
+        commentsLoader.classList.add('hidden');
+        commentsCount.textContent = `${socialCommentsArray.length} из ${socialCommentsArray.length} комментариев`;
+      }
       showFirstComments(socialCommentsArray);
     });
   }

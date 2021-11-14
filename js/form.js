@@ -1,7 +1,7 @@
 import {setBodyModalOpen} from './full-size-image.js';
+import {removeBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
 import {setupImageScale} from './image-effects.js';
-import {removeBodyModalOpen} from './full-size-image.js';
 import {ERROR_MESSAGES, MAX_STRING_LENGTH} from './consts.js';
 
 const validateStringToUnacceptableSymbols = (stringToCheck) => {
@@ -61,19 +61,18 @@ const setupInputHashTag = () => {
   });
 };
 
+const closeUserModal = () => {
+  const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+  imgUploadOverlay.classList.add('hidden');
+  removeBodyModalOpen();
+  document.querySelector('#upload-file').value = '';
+};
+
 const setupCloseEvents = () => {
   const imgUploadCancel = document.querySelector('.img-upload__cancel'); // кнопка крестик для закрытия
-  const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-
-  const close = () => {
-    imgUploadOverlay.classList.add('hidden');
-    removeBodyModalOpen();
-    document.querySelector('#upload-file').value = '';
-  };
-
   // Закрываем по крестику или кнопке ESC форму
   imgUploadCancel.addEventListener('click', () => {
-    close();
+    closeUserModal();
   });
 
   document.addEventListener('keydown', (evt) => {
@@ -81,7 +80,7 @@ const setupCloseEvents = () => {
       if ((document.activeElement.name === 'hashtags') || (document.activeElement.name === 'description')) {
         evt.stopPropagation();
       } else {
-        close();
+        closeUserModal();
       }
     }
   });
@@ -129,3 +128,5 @@ const activateUploadImage = () => {
 };
 
 export {activateUploadImage};
+export {closeUserModal};
+export {setupCloseEvents};

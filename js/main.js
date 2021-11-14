@@ -1,9 +1,8 @@
-import {createArrayObject} from './data.js';
-import {addContentToTemplate} from './paint-image.js';
-import {activateUploadImage} from './form.js';
+import {activateUploadImage, closeUserModal} from './form.js';
 import {createLoader} from './api.js';
+import {setUserFormSubmit} from './api.js';
 
-
-addContentToTemplate(createArrayObject());
+const loadData = createLoader(console.log, console.error);
+loadData();
 activateUploadImage();
-createLoader();
+setUserFormSubmit(closeUserModal);

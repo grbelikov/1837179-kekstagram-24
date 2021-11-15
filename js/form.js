@@ -51,8 +51,11 @@ const validateHashtagsArray = (hashtagValuesArray) => {
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorWrongSymbols);
         // paintBorderToElem(textHashtagsInput);
       }
-    // ?????? почему-то не работает на ходу
-    // submitButton.reportValidity();
+      // ?????? почему-то не работает на ходу
+      // submitButton.reportValidity();
+
+      // обнуляем массив
+      hashtagValuesArray = [];
     });
   });
 };
@@ -72,58 +75,79 @@ const setupInputHashTag = () => {
   });
 };
 
-//?????????? разобраться - при повторной отправке формы не работает
-const closeSuccessBanner = () => {
+const setupSuccessBanner = () => {
   const successSection = document.querySelector('.success');
   const successButton = document.querySelector('.success__button');
 
   successButton.addEventListener('click', () => {
-    successSection.classList.add('hidden');
+    successSection.remove();
   });
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === ESC_KEYBUTTON) {
-      successSection.classList.add('hidden');
+      successSection.remove();
     }
   });
   window.addEventListener('click', (evt) => {
     if (!evt.target.closest('.success__inner') && (!evt.target.closest('.success__button'))) {
-      successSection.classList.add('hidden');
+      successSection.remove();
     }
   });
 };
 
-//?????????? разобраться - при повторной отправке формы не работает
-const closeErrorBanner = () => {
+const setupErrorBanner = () => {
   const errorSection = document.querySelector('.error');
   const errorButton = document.querySelector('.error__button');
 
   errorButton.addEventListener('click', () => {
-    errorSection.classList.add('hidden');
+    errorSection.remove();
     // document.querySelector('.img-upload__overlay').classList.remove('hidden');
   });
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === ESC_KEYBUTTON) {
-      errorSection.classList.add('hidden');
+      errorSection.remove();
     }
   });
   window.addEventListener('click', (evt) => {
     if (!evt.target.closest('.error__inner') && (!evt.target.closest('.error__button'))) {
-      errorSection.classList.add('hidden');
+      errorSection.remove();
     }
   });
 };
 
-const showSuccessBanner = () => {
+const addSuccessSection = () => {
   const successTemplate = document.querySelector('#success');
   document.body.append(successTemplate.content.cloneNode(true));
-  closeSuccessBanner();
+  setupSuccessBanner();
 };
 
 const showErrorBanner = () => {
   const errorTemplate = document.querySelector('#error');
   document.body.append(errorTemplate.content.cloneNode(true));
   document.querySelector('.img-upload__overlay').classList.add('hidden');
-  closeErrorBanner();
+  setupErrorBanner();
+};
+
+// работы с полем комментария
+const validateCommentText = (comment) => {
+  const textDescriptionInput = document.querySelector('.text__description');
+  const submitButton = document.querySelector('#upload-submit');
+
+  submitButton.addEventListener('click', () => {
+    if (comment.length > MAX_STRING_LENGTH) {
+      textDescriptionInput.setCustomValidity(ERROR_MESSAGES.errorMessageLenComment);
+      // paintBorderToElem(textDescriptionInput);
+    }
+    // ?????? почему-то не работает на ходу
+    // submitButton.reportValidity();
+  });
+};
+
+const setupInputComment = () => {
+  const textDescriptionInput = document.querySelector('.text__description');
+  textDescriptionInput.addEventListener('input', () => {
+    const textComment = textDescriptionInput.value;
+    validateCommentText(textComment);
+  });
 };
 
 const closeUserModal = () => {
@@ -131,6 +155,8 @@ const closeUserModal = () => {
   imgUploadOverlay.classList.add('hidden');
   removeBodyModalOpen();
   document.querySelector('#upload-file').value = '';
+  const textComment = document.querySelector('.text__description').value;
+  validateCommentText(textComment);
 };
 
 const setupCloseEvents = () => {
@@ -151,39 +177,12 @@ const setupCloseEvents = () => {
   });
 };
 
-// работы с полем комментария
-const validateCommentText = (comment) => {
-  const textDescription = document.querySelector('.text__description');
-  const submitButton = document.querySelector('#upload-submit');
-
-  submitButton.addEventListener('click', () => {
-
-    if (comment.length > MAX_STRING_LENGTH) {
-      textDescription.setCustomValidity(ERROR_MESSAGES.errorMessageLenComment);
-      // paintBorderToElem(textDescription);
-    }
-    // ?????? почему-то не работает на ходу
-    // submitButton.reportValidity();
-  });
-};
-
-const setupInputComment = () => {
-  const textDescription = document.querySelector('.text__description');
-  textDescription.addEventListener('input', () => {
-    const textComment = textDescription.value;
-
-    validateCommentText(textComment);
-  });
-};
-
-// ????????? не работает масштаб
 // задаем форме дефолтные значения
 const setFormToDefault = () => {
   // ??????? может как-то можно еще очистить форму? через резет не работает
   document.querySelector('.text__hashtags').value = '';
   document.querySelector('.text__description').value = '';
   document.querySelector('.img-upload__preview img').style.transform = 'scale(1)';
-
   document.querySelector('.img-upload__preview').className = 'img-upload__preview';
   document.querySelector('.img-upload__preview').style = '';
   document.querySelector('.effect-level__slider').classList.add('hidden');
@@ -199,17 +198,16 @@ const activateUploadImage = () => {
   imgUploadInput.addEventListener('change', () => {
     setFormToDefault();
     setBodyModalOpen();
+    setupInputHashTag();
+    setupInputComment();
     imgUploadOverlay.classList.remove('hidden');
   });
 
-  // setupImageScale();
   imageEffects();
-  setupInputHashTag();
-  setupInputComment();
   setupCloseEvents();
 };
 
 export {activateUploadImage};
 export {closeUserModal};
-export {showSuccessBanner};
+export {addSuccessSection};
 export {showErrorBanner};

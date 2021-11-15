@@ -3,7 +3,7 @@ import {showAlert} from './util.js';
 import {URL_GET_DATA} from './consts.js';
 import {ERROR_MESSAGES} from './consts.js';
 import {URL_POST_DATA} from './consts.js';
-import {showSuccessBanner} from './form.js';
+import {addSuccessSection} from './form.js';
 import {showErrorBanner} from './form.js';
 import {setupImgFilters} from './filter.js';
 
@@ -36,7 +36,7 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
 
     const formData = new FormData(evt.target);
-    fetch (
+    fetch(
       URL_POST_DATA,
       {
         method: 'POST',
@@ -46,12 +46,13 @@ const setUserFormSubmit = (onSuccess) => {
       .then((response) => {
         if (response.ok) {
           onSuccess();
-          showSuccessBanner();
+          addSuccessSection();
         } else {
           showErrorBanner();
         }
       })
       .catch(() => {
+        showErrorBanner();
         showAlert(ERROR_MESSAGES.errorFailedToSubmitForm);
       });
   });

@@ -6,3 +6,7 @@ const loadData = createLoader(console.log, console.error);
 loadData();
 activateUploadImage();
 setUserFormSubmit(closeUserModal);
+
+// плохо очищается форма
+// не очищается скейл
+// не работает баннер при повторном вызове

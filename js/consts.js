@@ -10,7 +10,7 @@ const ESC_KEYBUTTON = 27;  // 27 = ESC
 const MAX_STRING_LENGTH = 140;
 const ALERT_SHOW_TIME = 10000;
 const URL_GET_DATA = 'https://24.javascript.pages.academy/kekstagram/data/';
-const URL_POST_DATA = 'https://24.javascript.pages.academy/kekstagram1/';
+const URL_POST_DATA = 'https://24.javascript.pages.academy/kekstagram/';
 
 const ERROR_MESSAGES = {
   errorMaxAmountHashtags:  'Нельзя указать больше пяти хэш-тегов',

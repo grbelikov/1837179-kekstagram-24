@@ -5,6 +5,7 @@ import {ERROR_MESSAGES} from './consts.js';
 import {URL_POST_DATA} from './consts.js';
 import {showSuccessBanner} from './form.js';
 import {showErrorBanner} from './form.js';
+import {setupImgFilters} from './filter.js';
 
 const createLoader = (onSuccess, onError) => () => fetch (URL_GET_DATA,
   {
@@ -14,6 +15,7 @@ const createLoader = (onSuccess, onError) => () => fetch (URL_GET_DATA,
 )
   .then((response) => {
     if (response.ok) {
+      setupImgFilters();
       return response.json();
     }
     showAlert(ERROR_MESSAGES.errorNoDataReceived);

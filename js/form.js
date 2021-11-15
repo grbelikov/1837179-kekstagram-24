@@ -2,6 +2,7 @@ import {setBodyModalOpen} from './full-size-image.js';
 import {removeBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
 import {setupImageScale} from './image-effects.js';
+import {imageEffects} from './image-effects.js';
 import {ERROR_MESSAGES, MAX_STRING_LENGTH,
   MAX_AVALIABLE_HASHTAGS, ESC_KEYBUTTON} from './consts.js';
 
@@ -94,9 +95,9 @@ const closeSuccessBanner = () => {
 //?????????? разобраться - при повторной отправке формы не работает
 const closeErrorBanner = () => {
   const errorSection = document.querySelector('.error');
-  const erroeButton = document.querySelector('.error');
+  const errorButton = document.querySelector('.error__button');
 
-  erroeButton.addEventListener('click', () => {
+  errorButton.addEventListener('click', () => {
     errorSection.classList.add('hidden');
     // document.querySelector('.img-upload__overlay').classList.remove('hidden');
   });
@@ -188,6 +189,7 @@ const setFormToDefault = () => {
   document.querySelector('.effect-level__slider').classList.add('hidden');
   document.querySelector('.scale__control').value = '';
   document.querySelector('.scale__control--value').value = `${100}%`;
+  setupImageScale();
 };
 
 const activateUploadImage = () => {
@@ -200,9 +202,10 @@ const activateUploadImage = () => {
     imgUploadOverlay.classList.remove('hidden');
   });
 
+  // setupImageScale();
+  imageEffects();
   setupInputHashTag();
   setupInputComment();
-  setupImageScale();
   setupCloseEvents();
 };
 

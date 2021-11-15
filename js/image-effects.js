@@ -138,7 +138,8 @@ const setupImageScale = () => {
     }
     setScaleValues();
   });
-  imageEffects();
+  // imageEffects();
 };
 
 export {setupImageScale};
+export {imageEffects};

@@ -3,7 +3,6 @@ const setupSlider = (effectName, sliderValue) => {
   const imgUploadPreview = document.querySelector('.img-upload__preview');
   const effectLevelValue = document.querySelector('.effect-level__value');
 
-  // console.log(effectName);
   const sliderEffectsDictionary = {
     chrome: {
       'name': 'grayscale',
@@ -48,7 +47,7 @@ const imageEffects = () => {
     connect: 'lower',
   });
   const sliderElementContainer = document.querySelector('.effect-level__slider');
-  sliderElementContainer.classList.add('hidden');
+  // sliderElementContainer.classList.add('hidden');
 
   effectsRadio.forEach((effect) => {
     effect.addEventListener('click', () => {
@@ -113,7 +112,7 @@ const setupImageScale = () => {
   const scaleControlSmaller = document.querySelector('.scale__control--smaller');
   const scaleControlBigger = document.querySelector('.scale__control--bigger');
   const imgUploadPreviewImg = document.querySelector('.img-upload__preview img');
-  let intScaleControlValue = +(scaleControlValue.value.slice(0, -1));
+  let intScaleControlValue = 100;
 
   const setScaleValues = () => {
     scaleControlValue.value = `${intScaleControlValue}%`;
@@ -139,7 +138,8 @@ const setupImageScale = () => {
     }
     setScaleValues();
   });
-  imageEffects();
+  // imageEffects();
 };
 
 export {setupImageScale};
+export {imageEffects};

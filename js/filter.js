@@ -15,25 +15,25 @@ const setupInactiveFilter = () => {
 
 const setRandomRankByClick = (cb) => {
   buttonFilterRandom.addEventListener('click', () => {
+    cb();
     setupInactiveFilter();
     buttonFilterRandom.classList.add('img-filters__button--active');
-    cb();
   });
 };
 
 const setDefaultRankByClick = (cb) => {
   buttonFilterDefault.addEventListener('click', () => {
+    cb();
     setupInactiveFilter();
     buttonFilterDefault.classList.add('img-filters__button--active');
-    cb();
   });
 };
 
 const setDiscussedRankByClick = (cb) => {
   buttonFilterDiscussed.addEventListener('click', () => {
+    cb();
     setupInactiveFilter();
     buttonFilterDiscussed.classList.add('img-filters__button--active');
-    cb();
   });
 };
 

@@ -1,3 +1,5 @@
+/* global _:readonly */
+
 import {addContentToTemplateDefaultOrder} from './paint-image.js';
 import {addContentToTemplateDescendingOrder} from './paint-image.js';
 import {addContentToTemplateRandomOrder} from './paint-image.js';
@@ -7,6 +9,7 @@ import {URL_GET_DATA} from './consts.js';
 import {ERROR_MESSAGES} from './consts.js';
 import {URL_POST_DATA} from './consts.js';
 import {addSuccessSection} from './form.js';
+import {RERENDER_DELAY} from './consts.js';
 import {showErrorBanner} from './form.js';
 import {setupImgFilters} from './filter.js';
 import {setRandomRankByClick} from './filter.js';
@@ -30,6 +33,13 @@ const createLoader = () => () => fetch (URL_GET_DATA,
   })
   .then((data) => {
     addContentToTemplateDefaultOrder(data);
+
+    // ????????? Почему не работает устранение дребезга??
+    // setDefaultRankByClick(_.debounce(
+    //   () => addContentToTemplateDefaultOrder(data),
+    //   RERENDER_DELAY,
+    // ));
+
     setDefaultRankByClick(() => addContentToTemplateDefaultOrder(data));
     setRandomRankByClick(() => addContentToTemplateRandomOrder(data));
     setDiscussedRankByClick(() => addContentToTemplateDescendingOrder(data));

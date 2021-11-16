@@ -1,6 +1,6 @@
-import {addContentToTemplate1} from './paint-image.js';
-import {addContentToTemplate2} from './paint-image.js';
-import {addContentToTemplate3} from './paint-image.js';
+import {addContentToTemplateDefaultOrder} from './paint-image.js';
+import {addContentToTemplateDescendingOrder} from './paint-image.js';
+import {addContentToTemplateRandomOrder} from './paint-image.js';
 
 import {showAlert} from './util.js';
 import {URL_GET_DATA} from './consts.js';
@@ -14,7 +14,7 @@ import {setDefaultRankByClick} from './filter.js';
 import {setDiscussedRankByClick} from './filter.js';
 
 
-const createLoader = (onSuccess, onError) => () => fetch (URL_GET_DATA,
+const createLoader = () => () => fetch (URL_GET_DATA,
   {
     method: 'GET',
     credentials: 'same-origin',
@@ -29,15 +29,13 @@ const createLoader = (onSuccess, onError) => () => fetch (URL_GET_DATA,
     throw new Error(`${response.status} ${response.statusText}`);
   })
   .then((data) => {
-    onSuccess(data);
-    addContentToTemplate1(data);
-    setDefaultRankByClick(() => addContentToTemplate1(data));
-    setDiscussedRankByClick(() => addContentToTemplate2(data));
-    setRandomRankByClick(() => addContentToTemplate3(data));
+    addContentToTemplateDefaultOrder(data);
+    setDefaultRankByClick(() => addContentToTemplateDefaultOrder(data));
+    setRandomRankByClick(() => addContentToTemplateRandomOrder(data));
+    setDiscussedRankByClick(() => addContentToTemplateDescendingOrder(data));
   })
-  .catch((err) => {
+  .catch(() => {
     showAlert(ERROR_MESSAGES.errorNoDataReceived);
-    onError(err);
   });
 
 const setUserFormSubmit = (onSuccess) => {

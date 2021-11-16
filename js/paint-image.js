@@ -1,68 +1,44 @@
 import {setupFullImage} from './full-size-image.js';
-import {AMOUNT_RANDOM_COMMENTS} from './consts.js';
+import {AMOUNT_RANDOM_PHOTOS} from './consts.js';
 
-const addContentToTemplate1 = (commentsArray) => {
-  const fragment = document.createDocumentFragment();
-  // Контейнер для комментариев
-  const blockPastPictures = document.querySelector('.pictures');
-  // Находим контент шаблона
-  const contentPicture = document.querySelector('#picture').content;
-  const elementPicture = contentPicture.querySelector('.picture');
-  const elementPictureImg = contentPicture.querySelector('.picture__img');
+const fragment = document.createDocumentFragment();
+// Контейнер для комментариев
+const blockPastPictures = document.querySelector('.pictures');
+// Находим контент шаблона
+const contentPicture = document.querySelector('#picture').content;
+const elementPicture = contentPicture.querySelector('.picture');
 
-  const addContent = (comment) => {
-    // делаем копию шаблона
-    const infoPicturesTemplate = elementPicture.cloneNode(true);
-    // Находим в шаблоне picture нужные элементы
-    const imgPicture = infoPicturesTemplate.querySelector('.picture__img');
-    const commentsPicture = infoPicturesTemplate.querySelector('.picture__comments');
-    const likesPicture = infoPicturesTemplate.querySelector('.picture__likes');
+const addContent = (comment) => {
+  // делаем копию шаблона
+  const infoPicturesTemplate = elementPicture.cloneNode(true);
+  // Находим в шаблоне picture нужные элементы
+  const imgPicture = infoPicturesTemplate.querySelector('.picture__img');
+  const commentsPicture = infoPicturesTemplate.querySelector('.picture__comments');
+  const likesPicture = infoPicturesTemplate.querySelector('.picture__likes');
 
-    imgPicture.src = comment.url;
-    imgPicture.alt = comment.description;
-    commentsPicture.textContent = comment.comments.length;
-    likesPicture.textContent = comment.likes;
+  imgPicture.src = comment.url;
+  imgPicture.alt = comment.description;
+  commentsPicture.textContent = comment.comments.length;
+  likesPicture.textContent = comment.likes;
 
-    fragment.appendChild(infoPicturesTemplate);
-  };
+  fragment.appendChild(infoPicturesTemplate);
+};
 
+// Функция рисует фотографии по умолчанию из массива
+const addContentToTemplateDefaultOrder = (commentsArray) => {
   // Пишем переданные значения
   commentsArray.forEach((comment) => {
     addContent(comment);
   });
-
-  const elementPictureImga = document.querySelectorAll('.picture');
-  elementPictureImga.forEach( eee => eee.remove() );
+  // Удаляем старые элементы
+  document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   blockPastPictures.appendChild(fragment);
   setupFullImage(commentsArray);
 };
 
-
-const addContentToTemplate2 = (commentsArray) => {
-  const fragment = document.createDocumentFragment();
-  // Контейнер для комментариев
-  const blockPastPictures = document.querySelector('.pictures');
-  // Находим контент шаблона
-  const contentPicture = document.querySelector('#picture').content;
-  const elementPicture = contentPicture.querySelector('.picture');
-
-  const addContent = (comment) => {
-    // делаем копию шаблона
-    const infoPicturesTemplate = elementPicture.cloneNode(true);
-    // Находим в шаблоне picture нужные элементы
-    const imgPicture = infoPicturesTemplate.querySelector('.picture__img');
-    const commentsPicture = infoPicturesTemplate.querySelector('.picture__comments');
-    const likesPicture = infoPicturesTemplate.querySelector('.picture__likes');
-
-    imgPicture.src = comment.url;
-    imgPicture.alt = comment.description;
-    commentsPicture.textContent = comment.comments.length;
-    likesPicture.textContent = comment.likes;
-
-    fragment.appendChild(infoPicturesTemplate);
-  };
-
+// Функция сортирует фотографии по убыванию кол-ва комментариев в них
+const addContentToTemplateDescendingOrder = (commentsArray) => {
   // Пишем переданные значения
   commentsArray
     .slice()
@@ -70,56 +46,30 @@ const addContentToTemplate2 = (commentsArray) => {
     .forEach((comment) => {
       addContent(comment);
     });
-
-  const elementPictureImga = document.querySelectorAll('.picture');
-  elementPictureImga.forEach( eee => eee.remove() );
+  // Удаляем старые элементы
+  document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   blockPastPictures.appendChild(fragment);
   setupFullImage(commentsArray);
 };
 
-
-const addContentToTemplate3 = (commentsArray) => {
-  const fragment = document.createDocumentFragment();
-  // Контейнер для комментариев
-  const blockPastPictures = document.querySelector('.pictures');
-  // Находим контент шаблона
-  const contentPicture = document.querySelector('#picture').content;
-  const elementPicture = contentPicture.querySelector('.picture');
-
-  const addContent = (comment) => {
-    // делаем копию шаблона
-    const infoPicturesTemplate = elementPicture.cloneNode(true);
-    // Находим в шаблоне picture нужные элементы
-    const imgPicture = infoPicturesTemplate.querySelector('.picture__img');
-    const commentsPicture = infoPicturesTemplate.querySelector('.picture__comments');
-    const likesPicture = infoPicturesTemplate.querySelector('.picture__likes');
-
-    imgPicture.src = comment.url;
-    imgPicture.alt = comment.description;
-    commentsPicture.textContent = comment.comments.length;
-    likesPicture.textContent = comment.likes;
-
-    fragment.appendChild(infoPicturesTemplate);
-  };
-
+// Функция рисует AMOUNT_RANDOM_COMMENTS случайных фотографий
+const addContentToTemplateRandomOrder = (commentsArray) => {
   // Пишем переданные значения
   commentsArray
     .slice()
     .sort(() => 0.5 - Math.random())
-    .slice(0, AMOUNT_RANDOM_COMMENTS)
+    .slice(0, AMOUNT_RANDOM_PHOTOS)
     .forEach((comment) => {
       addContent(comment);
     });
-
-  const elementPictureImga = document.querySelectorAll('.picture');
-  elementPictureImga.forEach( eee => eee.remove() );
+  // Удаляем старые элементы
+  document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   blockPastPictures.appendChild(fragment);
   setupFullImage(commentsArray);
 };
 
-
-export {addContentToTemplate1};
-export {addContentToTemplate2};
-export {addContentToTemplate3};
+export {addContentToTemplateDefaultOrder};
+export {addContentToTemplateDescendingOrder};
+export {addContentToTemplateRandomOrder};

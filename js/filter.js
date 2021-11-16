@@ -1,5 +1,3 @@
-import {AMOUNT_RANDOM_COMMENTS} from './consts.js';
-
 const buttonFilterDefault = document.querySelector('#filter-default');
 const buttonFilterRandom = document.querySelector('#filter-random');
 const buttonFilterDiscussed = document.querySelector('#filter-discussed');
@@ -10,22 +8,19 @@ const setupImgFilters = () => {
 };
 
 const setRandomRankByClick = (cb) => {
-  buttonFilterRandom.addEventListener('click', (evt) => {
-    console.log('ran');
+  buttonFilterRandom.addEventListener('click', () => {
     cb();
   });
 };
 
 const setDefaultRankByClick = (cb) => {
   buttonFilterDefault.addEventListener('click', () => {
-    console.log('def');
     cb();
   });
 };
 
 const setDiscussedRankByClick = (cb) => {
-  buttonFilterDiscussed.addEventListener('click', (evt) => {
-    console.log('dis');
+  buttonFilterDiscussed.addEventListener('click', () => {
     cb();
   });
 };

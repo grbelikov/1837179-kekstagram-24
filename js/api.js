@@ -22,7 +22,6 @@ const createLoader = () => () => fetch (URL_GET_DATA,
 )
   .then((response) => {
     if (response.ok) {
-      setupImgFilters();
       return response.json();
     }
     showAlert(ERROR_MESSAGES.errorNoDataReceived);
@@ -30,7 +29,7 @@ const createLoader = () => () => fetch (URL_GET_DATA,
   })
   .then((data) => {
     addContentToTemplateDefaultOrder(data);
-
+    setupImgFilters();
     setDefaultRankByClick(debounce(
       () => addContentToTemplateDefaultOrder(data),
       RERENDER_DELAY,

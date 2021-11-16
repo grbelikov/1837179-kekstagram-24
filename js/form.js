@@ -25,22 +25,28 @@ const validateHashtagsArray = (hashtagValuesArray) => {
     textHashtagsInput.setCustomValidity('');
 
     if (hashtagValuesArray.length > MAX_AVALIABLE_HASHTAGS) {
+      textHashtagsInput.style.outline = '3px solid #ff0033';
       textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxAmountHashtags);
     }
     if (hasDuplicates(hashtagValuesArray)) {
+      textHashtagsInput.style.outline = '3px solid #ff0033';
       textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorRepetitiveHashtah);
     }
 
     hashtagValuesArray.forEach((element) => {
       if (element[0] !== '#') {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorFirstSymbol);
       } else if (element.length < 2) {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMinSymbols);
       }
       if (element.length > 20) {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxLengthHashtag);
       }
       if (validateStringToUnacceptableSymbols(element)) {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorWrongSymbols);
       }
       // обнуляем массив
@@ -135,9 +141,12 @@ const setupInputComment = () => {
     const textComment = textDescriptionInput.value;
     if (textComment.length > MAX_STRING_LENGTH) {
       textDescriptionInput.setCustomValidity(ERROR_MESSAGES.errorMessageLenComment);
+      textDescriptionInput.style.outline = '3px solid #ff0033';
     } else
     {
       textDescriptionInput.setCustomValidity('');
+      textDescriptionInput.style.outline = '';
+
     }
     validateCommentText(textComment);
   });
@@ -194,8 +203,8 @@ const activateUploadImage = () => {
     setupInputHashTag();
     setupInputComment();
     imgUploadOverlay.classList.remove('hidden');
+    document.querySelector('.text__hashtags').style.outline = '';
   });
-
   imageEffects();
   setupCloseEvents();
 };

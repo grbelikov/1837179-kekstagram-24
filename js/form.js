@@ -3,6 +3,7 @@ import {removeBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
 import {setupImageScale} from './image-effects.js';
 import {imageEffects} from './image-effects.js';
+import {chooseUserPhoto} from './user-image.js';
 import {ERROR_MESSAGES, MAX_STRING_LENGTH,
   MAX_AVALIABLE_HASHTAGS, ESC_KEYBUTTON} from './consts.js';
 
@@ -196,6 +197,7 @@ const activateUploadImage = () => {
   const imgUploadInput = document.querySelector('#upload-file');
 
   imgUploadInput.addEventListener('change', () => {
+    chooseUserPhoto();
     setFormToDefault();
     setBodyModalOpen();
     setupInputHashTag();

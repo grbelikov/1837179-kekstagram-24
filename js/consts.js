@@ -10,7 +10,7 @@ const AMOUNT_RANDOM_PHOTOS = 10;
 const ESC_KEYBUTTON = 27;  // 27 = ESC
 const MAX_STRING_LENGTH = 140;
 const ALERT_SHOW_TIME = 10000;
-const RERENDER_DELAY = 2000;
+const RERENDER_DELAY = 500;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const URL_GET_DATA = 'https://24.javascript.pages.academy/kekstagram/data/';
 const URL_POST_DATA = 'https://24.javascript.pages.academy/kekstagram/';

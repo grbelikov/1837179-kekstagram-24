@@ -1,9 +1,7 @@
-/* global _:readonly */
-
 import {addContentToTemplateDefaultOrder} from './paint-image.js';
 import {addContentToTemplateDescendingOrder} from './paint-image.js';
 import {addContentToTemplateRandomOrder} from './paint-image.js';
-
+import {debounce} from './utils/debounce.js';
 import {showAlert} from './util.js';
 import {URL_GET_DATA} from './consts.js';
 import {ERROR_MESSAGES} from './consts.js';
@@ -15,7 +13,6 @@ import {setupImgFilters} from './filter.js';
 import {setRandomRankByClick} from './filter.js';
 import {setDefaultRankByClick} from './filter.js';
 import {setDiscussedRankByClick} from './filter.js';
-
 
 const createLoader = () => () => fetch (URL_GET_DATA,
   {
@@ -34,15 +31,20 @@ const createLoader = () => () => fetch (URL_GET_DATA,
   .then((data) => {
     addContentToTemplateDefaultOrder(data);
 
-    // ????????? Почему не работает устранение дребезга??
-    // setDefaultRankByClick(_.debounce(
-    //   () => addContentToTemplateDefaultOrder(data),
-    //   RERENDER_DELAY,
-    // ));
+    setDefaultRankByClick(debounce(
+      () => addContentToTemplateDefaultOrder(data),
+      RERENDER_DELAY,
+    ));
 
-    setDefaultRankByClick(() => addContentToTemplateDefaultOrder(data));
-    setRandomRankByClick(() => addContentToTemplateRandomOrder(data));
-    setDiscussedRankByClick(() => addContentToTemplateDescendingOrder(data));
+    setRandomRankByClick(debounce(
+      () => addContentToTemplateRandomOrder(data),
+      RERENDER_DELAY,
+    ));
+
+    setDiscussedRankByClick(debounce(
+      () => addContentToTemplateDescendingOrder(data),
+      RERENDER_DELAY,
+    ));
   })
   .catch(() => {
     showAlert(ERROR_MESSAGES.errorNoDataReceived);

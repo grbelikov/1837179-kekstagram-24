@@ -2,6 +2,7 @@ import {showFirstComments} from './comments-update.js';
 import {setupShowingCommentsByClick} from './comments-update.js';
 import {MAX_DISPLAYED_COMMENTS} from './consts.js';
 import {ESC_KEYBUTTON} from './consts.js';
+import {setupCommentsLoaderButton} from './comments-update.js';
 
 // Функция задаёт body класс modal-open чтобы не прокручивался фон
 const setBodyModalOpen = () => {
@@ -57,6 +58,7 @@ const setupFullImage = (objComment) => {
   const likesElement = document.querySelectorAll('.picture__likes');
   const commentsElement = document.querySelectorAll('.picture__comments');
   const pictureCancel = document.querySelector('#picture-cancel');
+  const commentsLoaderButton = document.querySelector('.comments-loader');
 
   for (let i = 0; i < thumbnails.length; i++) {
     thumbnails[i].addEventListener('click', () => {
@@ -81,7 +83,7 @@ const setupFullImage = (objComment) => {
       document.addEventListener('keydown', (evt) => {
         if (evt.keyCode === ESC_KEYBUTTON) { // 27 = ESC
           bigPictureSection.classList.add('hidden');
-          removeBodyModalOpen();
+          commentsLoaderButton.addEventListener('click', setupCommentsLoaderButton);
         }
       });
 

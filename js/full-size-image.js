@@ -52,7 +52,6 @@ const setupFullImage = (objComment) => {
 
   const commentsCount = document.querySelector('.social__comment-count');
   const socialCaption = document.querySelector('.social__caption');
-  // const socialCommentCount = document.querySelector('.social__comment-count');
 
   const thumbnails = document.querySelectorAll('.picture__img');
   const likesElement = document.querySelectorAll('.picture__likes');

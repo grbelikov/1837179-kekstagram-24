@@ -47,7 +47,6 @@ const imageEffects = () => {
     connect: 'lower',
   });
   const sliderElementContainer = document.querySelector('.effect-level__slider');
-  // sliderElementContainer.classList.add('hidden');
 
   effectsRadio.forEach((effect) => {
     effect.addEventListener('click', () => {
@@ -138,7 +137,6 @@ const setupImageScale = () => {
     }
     setScaleValues();
   });
-  // imageEffects();
 };
 
 export {setupImageScale};

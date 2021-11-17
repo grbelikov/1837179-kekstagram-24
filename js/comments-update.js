@@ -6,7 +6,6 @@ const showFirstComments = (socialCommentsAll) => {
     socialCommentsAll[i].classList.add('hidden');
   }
 };
-
 // показывать больше комментариев при нажатии на кнопку 'Загрузить еще'
 const setupShowingCommentsByClick = () => {
   // кнопка Загрузить еще

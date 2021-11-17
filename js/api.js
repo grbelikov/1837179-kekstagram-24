@@ -1,13 +1,13 @@
 import {addContentToTemplateDefaultOrder} from './paint-image.js';
 import {addContentToTemplateDescendingOrder} from './paint-image.js';
 import {addContentToTemplateRandomOrder} from './paint-image.js';
-import {debounce} from './utils/debounce.js';
 import {showAlert} from './util.js';
+import {debounce} from './utils/debounce.js';
 import {URL_GET_DATA} from './consts.js';
 import {ERROR_MESSAGES} from './consts.js';
 import {URL_POST_DATA} from './consts.js';
-import {addSuccessSection} from './form.js';
 import {RERENDER_DELAY} from './consts.js';
+import {addSuccessSection} from './form.js';
 import {showErrorBanner} from './form.js';
 import {setupImgFilters} from './filter.js';
 import {setRandomRankByClick} from './filter.js';
@@ -22,7 +22,6 @@ const createLoader = () => () => fetch (URL_GET_DATA,
 )
   .then((response) => {
     if (response.ok) {
-      setupImgFilters();
       return response.json();
     }
     showAlert(ERROR_MESSAGES.errorNoDataReceived);
@@ -30,7 +29,7 @@ const createLoader = () => () => fetch (URL_GET_DATA,
   })
   .then((data) => {
     addContentToTemplateDefaultOrder(data);
-
+    setupImgFilters();
     setDefaultRankByClick(debounce(
       () => addContentToTemplateDefaultOrder(data),
       RERENDER_DELAY,

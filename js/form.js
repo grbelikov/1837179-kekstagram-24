@@ -17,11 +17,6 @@ const validateStringToUnacceptableSymbols = (stringToCheck) => {
   }
 };
 
-// ???????? нужно ли доабвлять свою рамку или достаточно оранжевой встроенной?
-// const paintBorderToElem = (elemName) => {
-//   elemName.style = 'outline: 4px solid red';
-// };
-
 const validateHashtagsArray = (hashtagValuesArray) => {
   const submitButton = document.querySelector('#upload-submit');
   const textHashtagsInput = document.querySelector('.text__hashtags');
@@ -30,31 +25,30 @@ const validateHashtagsArray = (hashtagValuesArray) => {
     textHashtagsInput.setCustomValidity('');
 
     if (hashtagValuesArray.length > MAX_AVALIABLE_HASHTAGS) {
+      textHashtagsInput.style.outline = '3px solid #ff0033';
       textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxAmountHashtags);
     }
     if (hasDuplicates(hashtagValuesArray)) {
+      textHashtagsInput.style.outline = '3px solid #ff0033';
       textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorRepetitiveHashtah);
     }
 
     hashtagValuesArray.forEach((element) => {
       if (element[0] !== '#') {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorFirstSymbol);
-        // paintBorderToElem(textHashtagsInput);
       } else if (element.length < 2) {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMinSymbols);
-        // paintBorderToElem(textHashtagsInput);
       }
       if (element.length > 20) {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxLengthHashtag);
-        // paintBorderToElem(textHashtagsInput);
       }
       if (validateStringToUnacceptableSymbols(element)) {
+        textHashtagsInput.style.outline = '3px solid #ff0033';
         textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorWrongSymbols);
-        // paintBorderToElem(textHashtagsInput);
       }
-      // ?????? почему-то не работает на ходу
-      // submitButton.reportValidity();
-
       // обнуляем массив
       hashtagValuesArray = [];
     });
@@ -68,7 +62,6 @@ const setupInputHashTag = () => {
     let arrayHashtagsValues = [];
     // приводим к нижнему регистру
     arrayHashtagsValues = textHashtagsInput.value.toLowerCase().split(' ');
-
     // отфильтровываем, чтобы не попадали пустые значения '' в случае нажатия на пробел
     arrayHashtagsValues = arrayHashtagsValues.filter(Boolean);
 
@@ -101,7 +94,6 @@ const setupErrorBanner = () => {
 
   errorButton.addEventListener('click', () => {
     errorSection.remove();
-    // document.querySelector('.img-upload__overlay').classList.remove('hidden');
   });
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === ESC_KEYBUTTON) {
@@ -136,10 +128,10 @@ const validateCommentText = (comment) => {
   submitButton.addEventListener('click', () => {
     if (comment.length > MAX_STRING_LENGTH) {
       textDescriptionInput.setCustomValidity(ERROR_MESSAGES.errorMessageLenComment);
-      // paintBorderToElem(textDescriptionInput);
+    } else
+    {
+      textDescriptionInput.setCustomValidity('');
     }
-    // ?????? почему-то не работает на ходу
-    // submitButton.reportValidity();
   });
 };
 
@@ -147,6 +139,15 @@ const setupInputComment = () => {
   const textDescriptionInput = document.querySelector('.text__description');
   textDescriptionInput.addEventListener('input', () => {
     const textComment = textDescriptionInput.value;
+    if (textComment.length > MAX_STRING_LENGTH) {
+      textDescriptionInput.setCustomValidity(ERROR_MESSAGES.errorMessageLenComment);
+      textDescriptionInput.style.outline = '3px solid #ff0033';
+    } else
+    {
+      textDescriptionInput.setCustomValidity('');
+      textDescriptionInput.style.outline = '';
+
+    }
     validateCommentText(textComment);
   });
 };
@@ -180,7 +181,6 @@ const setupCloseEvents = () => {
 
 // задаем форме дефолтные значения
 const setFormToDefault = () => {
-  // ??????? может как-то можно еще очистить форму? через резет не работает
   document.querySelector('.text__hashtags').value = '';
   document.querySelector('.text__description').value = '';
   document.querySelector('.img-upload__preview img').style.transform = 'scale(1)';
@@ -203,8 +203,8 @@ const activateUploadImage = () => {
     setupInputHashTag();
     setupInputComment();
     imgUploadOverlay.classList.remove('hidden');
+    document.querySelector('.text__hashtags').style.outline = '';
   });
-
   imageEffects();
   setupCloseEvents();
 };

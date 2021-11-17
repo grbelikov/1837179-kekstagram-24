@@ -24,7 +24,6 @@ const setupCommentsLoaderButton = () => {
   }
   socialCommentCount.textContent =  `${socialCommentsArray.length + maxAddComments} из ${lengthHideComment + socialCommentsArray.length} комментариев`;
 };
-
 // показывать больше комментариев при нажатии на кнопку 'Загрузить еще'
 const setupShowingCommentsByClick = () => {
   // ищем все скрытые комментарии

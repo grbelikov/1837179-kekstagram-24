@@ -7,7 +7,7 @@ const showFirstComments = (socialCommentsAll) => {
   }
 };
 
-const setupCommentsLoaderButton = () => {
+const setCommentsLoaderButton = () => {
   // убираем тег hidden у следующих комментариев
   const socialCommentCount = document.querySelector('.social__comment-count');
   const socialHiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
@@ -26,11 +26,11 @@ const setupCommentsLoaderButton = () => {
 };
 
 // показывать больше комментариев при нажатии на кнопку 'Загрузить еще'
-const setupShowingCommentsByClick = () => {
+const setShowingCommentsByClick = () => {
   // ищем все скрытые комментарии
-  document.querySelector('.comments-loader').addEventListener('click', setupCommentsLoaderButton);
+  document.querySelector('.comments-loader').addEventListener('click', setCommentsLoaderButton);
 };
 
-export {setupShowingCommentsByClick};
+export {setShowingCommentsByClick};
 export {showFirstComments};
-export {setupCommentsLoaderButton};
+export {setCommentsLoaderButton};

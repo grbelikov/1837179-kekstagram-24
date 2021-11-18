@@ -1,8 +1,8 @@
 import {showFirstComments} from './comments-update.js';
-import {setupShowingCommentsByClick} from './comments-update.js';
+import {setShowingCommentsByClick} from './comments-update.js';
 import {MAX_DISPLAYED_COMMENTS} from './consts.js';
 import {ESC_KEYBUTTON} from './consts.js';
-import {setupCommentsLoaderButton} from './comments-update.js';
+import {setCommentsLoaderButton} from './comments-update.js';
 
 // Функция задаёт body класс modal-open чтобы не прокручивался фон
 const setBodyModalOpen = () => {
@@ -45,7 +45,7 @@ const addComments = (commentsArray) => {
   socialComments.appendChild(fragmentComment);
 };
 
-const setupFullImage = (objComment) => {
+const setFullImage = (objComment) => {
   const bigPictureSection = document.querySelector('.big-picture');
   const bigPictureImg = document.querySelector('.big-picture__img img');
   const likesCounter = document.querySelector('.likes-count');
@@ -83,7 +83,7 @@ const setupFullImage = (objComment) => {
       document.addEventListener('keydown', (evt) => {
         if (evt.keyCode === ESC_KEYBUTTON) { // 27 = ESC
           bigPictureSection.classList.add('hidden');
-          commentsLoaderButton.addEventListener('click', setupCommentsLoaderButton);
+          commentsLoaderButton.addEventListener('click', setCommentsLoaderButton);
         }
       });
 
@@ -111,9 +111,9 @@ const setupFullImage = (objComment) => {
       showFirstComments(socialCommentsArray);
     });
   }
-  setupShowingCommentsByClick();
+  setShowingCommentsByClick();
 };
 
-export {setupFullImage};
+export {setFullImage};
 export {setBodyModalOpen};
 export {removeBodyModalOpen};

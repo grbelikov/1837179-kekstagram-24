@@ -1,4 +1,4 @@
-import {setupFullImage} from './full-size-image.js';
+import {setFullImage} from './full-size-image.js';
 import {AMOUNT_RANDOM_PHOTOS} from './consts.js';
 
 const fragment = document.createDocumentFragment();
@@ -36,7 +36,7 @@ const addContentToTemplateDefaultOrder = (commentsArray) => {
   document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   blockPastPictures.appendChild(fragment);
-  setupFullImage(newDefaultCommentsArray);
+  setFullImage(newDefaultCommentsArray);
 };
 
 // Функция сортирует фотографии по убыванию кол-ва комментариев в них
@@ -54,7 +54,7 @@ const addContentToTemplateDescendingOrder = (commentsArray) => {
   document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   blockPastPictures.appendChild(fragment);
-  setupFullImage(newDescendingCommentsArray);
+  setFullImage(newDescendingCommentsArray);
 };
 
 // Функция рисует AMOUNT_RANDOM_COMMENTS случайных фотографий
@@ -73,7 +73,7 @@ const addContentToTemplateRandomOrder = (commentsArray) => {
   document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   blockPastPictures.appendChild(fragment);
-  setupFullImage(newRandomCommentsArray);
+  setFullImage(newRandomCommentsArray);
 };
 
 export {addContentToTemplateDefaultOrder};

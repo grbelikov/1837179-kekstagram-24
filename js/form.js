@@ -1,7 +1,7 @@
 import {setBodyModalOpen} from './full-size-image.js';
 import {removeBodyModalOpen} from './full-size-image.js';
 import {hasDuplicates} from './util.js';
-import {setupImageScale} from './image-effects.js';
+import {setImageScale} from './image-effects.js';
 import {imageEffects} from './image-effects.js';
 import {chooseUserPhoto} from './user-image.js';
 import {ERROR_MESSAGES, MAX_STRING_LENGTH,
@@ -55,7 +55,7 @@ const validateHashtagsArray = (hashtagValuesArray) => {
   });
 };
 
-const setupInputHashTag = () => {
+const setInputHashTag = () => {
   const textHashtagsInput = document.querySelector('.text__hashtags');
 
   textHashtagsInput.addEventListener('input', () => {
@@ -69,7 +69,7 @@ const setupInputHashTag = () => {
   });
 };
 
-const setupSuccessBanner = () => {
+const setSuccessBanner = () => {
   const successSection = document.querySelector('.success');
   const successButton = document.querySelector('.success__button');
 
@@ -88,7 +88,7 @@ const setupSuccessBanner = () => {
   });
 };
 
-const setupErrorBanner = () => {
+const setErrorBanner = () => {
   const errorSection = document.querySelector('.error');
   const errorButton = document.querySelector('.error__button');
 
@@ -110,14 +110,14 @@ const setupErrorBanner = () => {
 const addSuccessSection = () => {
   const successTemplate = document.querySelector('#success');
   document.body.append(successTemplate.content.cloneNode(true));
-  setupSuccessBanner();
+  setSuccessBanner();
 };
 
 const showErrorBanner = () => {
   const errorTemplate = document.querySelector('#error');
   document.body.append(errorTemplate.content.cloneNode(true));
   document.querySelector('.img-upload__overlay').classList.add('hidden');
-  setupErrorBanner();
+  setErrorBanner();
 };
 
 // работы с полем комментария
@@ -135,7 +135,7 @@ const validateCommentText = (comment) => {
   });
 };
 
-const setupInputComment = () => {
+const setInputComment = () => {
   const textDescriptionInput = document.querySelector('.text__description');
   textDescriptionInput.addEventListener('input', () => {
     const textComment = textDescriptionInput.value;
@@ -161,7 +161,7 @@ const closeUserModal = () => {
   validateCommentText(textComment);
 };
 
-const setupCloseEvents = () => {
+const setCloseEvents = () => {
   const imgUploadCancel = document.querySelector('.img-upload__cancel'); // кнопка крестик для закрытия
   // Закрываем по крестику или кнопке ESC форму
   imgUploadCancel.addEventListener('click', () => {
@@ -189,7 +189,7 @@ const setFormToDefault = () => {
   document.querySelector('.effect-level__slider').classList.add('hidden');
   document.querySelector('.scale__control').value = '';
   document.querySelector('.scale__control--value').value = `${100}%`;
-  setupImageScale();
+  setImageScale();
 };
 
 const activateUploadImage = () => {
@@ -200,13 +200,13 @@ const activateUploadImage = () => {
     chooseUserPhoto();
     setFormToDefault();
     setBodyModalOpen();
-    setupInputHashTag();
-    setupInputComment();
+    setInputHashTag();
+    setInputComment();
     imgUploadOverlay.classList.remove('hidden');
     document.querySelector('.text__hashtags').style.outline = '';
   });
   imageEffects();
-  setupCloseEvents();
+  setCloseEvents();
 };
 
 export {activateUploadImage};

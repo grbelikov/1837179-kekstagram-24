@@ -9,7 +9,7 @@ import {URL_POST_DATA} from './consts.js';
 import {RERENDER_DELAY} from './consts.js';
 import {addSuccessSection} from './form.js';
 import {showErrorBanner} from './form.js';
-import {setupImgFilters} from './filter.js';
+import {setImgFilters} from './filter.js';
 import {setRandomRankByClick} from './filter.js';
 import {setDefaultRankByClick} from './filter.js';
 import {setDiscussedRankByClick} from './filter.js';
@@ -29,7 +29,7 @@ const createLoader = () => () => fetch (URL_GET_DATA,
   })
   .then((data) => {
     addContentToTemplateDefaultOrder(data);
-    setupImgFilters();
+    setImgFilters();
     setDefaultRankByClick(debounce(
       () => addContentToTemplateDefaultOrder(data),
       RERENDER_DELAY,

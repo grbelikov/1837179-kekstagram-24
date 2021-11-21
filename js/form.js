@@ -1,73 +1,11 @@
 import {setBodyModalOpen} from './full-size-image.js';
 import {removeBodyModalOpen} from './full-size-image.js';
-import {hasDuplicates} from './util.js';
+import {chooseUserPhoto} from './user-image.js';
 import {setImageScale} from './image-effects.js';
 import {imageEffects} from './image-effects.js';
-import {chooseUserPhoto} from './user-image.js';
-import {ERROR_MESSAGES, MAX_STRING_LENGTH,
-  MAX_AVALIABLE_HASHTAGS, ESC_KEYBUTTON} from './consts.js';
-
-const validateStringToUnacceptableSymbols = (stringToCheck) => {
-  // У нас существует другая проверка на первый символ === #, так что отсечем его.
-  // Иначе он будет подпадать под шаблон регекспа и придется писать доп. код
-  stringToCheck = stringToCheck.slice(1);
-  if (stringToCheck.length > 0) {
-    const regexp = /[^а-я\w]/i;
-    return regexp.test(stringToCheck);
-  }
-};
-
-const validateHashtagsArray = (hashtagValuesArray) => {
-  const submitButton = document.querySelector('#upload-submit');
-  const textHashtagsInput = document.querySelector('.text__hashtags');
-
-  submitButton.addEventListener('click', () => {
-    textHashtagsInput.setCustomValidity('');
-
-    if (hashtagValuesArray.length > MAX_AVALIABLE_HASHTAGS) {
-      textHashtagsInput.style.outline = '3px solid #ff0033';
-      textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxAmountHashtags);
-    }
-    if (hasDuplicates(hashtagValuesArray)) {
-      textHashtagsInput.style.outline = '3px solid #ff0033';
-      textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorRepetitiveHashtah);
-    }
-
-    hashtagValuesArray.forEach((element) => {
-      if (element[0] !== '#') {
-        textHashtagsInput.style.outline = '3px solid #ff0033';
-        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorFirstSymbol);
-      } else if (element.length < 2) {
-        textHashtagsInput.style.outline = '3px solid #ff0033';
-        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMinSymbols);
-      }
-      if (element.length > 20) {
-        textHashtagsInput.style.outline = '3px solid #ff0033';
-        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorMaxLengthHashtag);
-      }
-      if (validateStringToUnacceptableSymbols(element)) {
-        textHashtagsInput.style.outline = '3px solid #ff0033';
-        textHashtagsInput.setCustomValidity(ERROR_MESSAGES.errorWrongSymbols);
-      }
-      // обнуляем массив
-      hashtagValuesArray = [];
-    });
-  });
-};
-
-const setInputHashTag = () => {
-  const textHashtagsInput = document.querySelector('.text__hashtags');
-
-  textHashtagsInput.addEventListener('input', () => {
-    let arrayHashtagsValues = [];
-    // приводим к нижнему регистру
-    arrayHashtagsValues = textHashtagsInput.value.toLowerCase().split(' ');
-    // отфильтровываем, чтобы не попадали пустые значения '' в случае нажатия на пробел
-    arrayHashtagsValues = arrayHashtagsValues.filter(Boolean);
-
-    validateHashtagsArray(arrayHashtagsValues);
-  });
-};
+import {setInputComment} from './fields-validation.js';
+import {setInputHashTag} from './fields-validation.js';
+import {ESC_KEYBUTTON} from './consts.js';
 
 const setSuccessBanner = () => {
   const successSection = document.querySelector('.success');
@@ -120,45 +58,11 @@ const showErrorBanner = () => {
   setErrorBanner();
 };
 
-// работы с полем комментария
-const validateCommentText = (comment) => {
-  const textDescriptionInput = document.querySelector('.text__description');
-  const submitButton = document.querySelector('#upload-submit');
-
-  submitButton.addEventListener('click', () => {
-    if (comment.length > MAX_STRING_LENGTH) {
-      textDescriptionInput.setCustomValidity(ERROR_MESSAGES.errorMessageLenComment);
-    } else
-    {
-      textDescriptionInput.setCustomValidity('');
-    }
-  });
-};
-
-const setInputComment = () => {
-  const textDescriptionInput = document.querySelector('.text__description');
-  textDescriptionInput.addEventListener('input', () => {
-    const textComment = textDescriptionInput.value;
-    if (textComment.length > MAX_STRING_LENGTH) {
-      textDescriptionInput.setCustomValidity(ERROR_MESSAGES.errorMessageLenComment);
-      textDescriptionInput.style.outline = '3px solid #ff0033';
-    } else
-    {
-      textDescriptionInput.setCustomValidity('');
-      textDescriptionInput.style.outline = '';
-
-    }
-    validateCommentText(textComment);
-  });
-};
-
 const closeUserModal = () => {
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
   imgUploadOverlay.classList.add('hidden');
   removeBodyModalOpen();
   document.querySelector('#upload-file').value = '';
-  const textComment = document.querySelector('.text__description').value;
-  validateCommentText(textComment);
 };
 
 const setCloseEvents = () => {
@@ -188,6 +92,8 @@ const setFormToDefault = () => {
   document.querySelector('.img-upload__preview').style = '';
   document.querySelector('.effect-level__slider').classList.add('hidden');
   document.querySelector('.scale__control').value = '';
+  document.querySelector('.text__hashtags').setCustomValidity('');
+  document.querySelector('.text__description').setCustomValidity('');
   document.querySelector('.scale__control--value').value = `${100}%`;
   setImageScale();
 };

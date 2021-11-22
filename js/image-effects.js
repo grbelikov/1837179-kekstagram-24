@@ -1,5 +1,5 @@
 // эффекты
-const setupSlider = (effectName, sliderValue) => {
+const setSlider = (effectName, sliderValue) => {
   const imgUploadPreview = document.querySelector('.img-upload__preview');
   const effectLevelValue = document.querySelector('.effect-level__value');
 
@@ -99,14 +99,14 @@ const imageEffects = () => {
       let effectLevelValue;
       sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
         effectLevelValue = unencoded[handle];
-        setupSlider(cssName, effectLevelValue);
+        setSlider(cssName, effectLevelValue);
       });
     });
   });
 };
 
 // Масштаб изображения
-const setupImageScale = () => {
+const setImageScale = () => {
   const scaleControlValue = document.querySelector('.scale__control--value');
   const scaleControlSmaller = document.querySelector('.scale__control--smaller');
   const scaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -139,5 +139,5 @@ const setupImageScale = () => {
   });
 };
 
-export {setupImageScale};
+export {setImageScale};
 export {imageEffects};

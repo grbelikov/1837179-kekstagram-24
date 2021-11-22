@@ -6,29 +6,31 @@ const showFirstComments = (socialCommentsAll) => {
     socialCommentsAll[i].classList.add('hidden');
   }
 };
-// показывать больше комментариев при нажатии на кнопку 'Загрузить еще'
-const setupShowingCommentsByClick = () => {
-  // кнопка Загрузить еще
+
+const setCommentsLoaderButton = () => {
+  // убираем тег hidden у следующих комментариев
+  const socialCommentCount = document.querySelector('.social__comment-count');
+  const socialHiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
+  const socialCommentsArray = document.querySelectorAll('.social__comment:not(.hidden)');
+  const lengthHideComment = socialHiddenCommentsArray.length;
+  const maxAddComments = (MAX_DISPLAYED_COMMENTS >= lengthHideComment) ? lengthHideComment: MAX_DISPLAYED_COMMENTS;
   const commentsLoaderButton = document.querySelector('.comments-loader');
-  // ищем все скрытые комментарии
-  commentsLoaderButton.addEventListener('click', () => {
 
-    // убираем тег hidden у следующих комментариев
-    const socialCommentCount = document.querySelector('.social__comment-count');
-    const socialHiddenCommentsArray = document.querySelectorAll('.social__comment.hidden');
-    const socialCommentsArray = document.querySelectorAll('.social__comment:not(.hidden)');
-    const lengthHideComment = socialHiddenCommentsArray.length;
-    const maxAddComments = (MAX_DISPLAYED_COMMENTS >= lengthHideComment) ? lengthHideComment: MAX_DISPLAYED_COMMENTS;
-
-    if (lengthHideComment === maxAddComments) {
-      commentsLoaderButton.classList.add('hidden');
-    }
-    for (let i = 0; i < maxAddComments; i++) {
-      socialHiddenCommentsArray[i].classList.remove('hidden');
-    }
-    socialCommentCount.textContent =  `${socialCommentsArray.length + maxAddComments} из ${lengthHideComment + socialCommentsArray.length} комментариев`;
-  });
+  if (lengthHideComment === maxAddComments) {
+    commentsLoaderButton.classList.add('hidden');
+  }
+  for (let i = 0; i < maxAddComments; i++) {
+    socialHiddenCommentsArray[i].classList.remove('hidden');
+  }
+  socialCommentCount.textContent =  `${socialCommentsArray.length + maxAddComments} из ${lengthHideComment + socialCommentsArray.length} комментариев`;
 };
 
-export {setupShowingCommentsByClick};
+// показывать больше комментариев при нажатии на кнопку 'Загрузить еще'
+const setShowingCommentsByClick = () => {
+  // ищем все скрытые комментарии
+  document.querySelector('.comments-loader').addEventListener('click', setCommentsLoaderButton);
+};
+
+export {setShowingCommentsByClick};
 export {showFirstComments};
+export {setCommentsLoaderButton};

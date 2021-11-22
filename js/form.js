@@ -90,6 +90,7 @@ const setFormToDefault = () => {
   document.querySelector('.img-upload__preview img').style.transform = 'scale(1)';
   document.querySelector('.img-upload__preview').className = 'img-upload__preview';
   document.querySelector('.img-upload__preview').style = '';
+  document.querySelector('.text__description').style.outline = '';
   document.querySelector('.effect-level__slider').classList.add('hidden');
   document.querySelector('.scale__control').value = '';
   document.querySelector('.text__hashtags').setCustomValidity('');
@@ -101,13 +102,13 @@ const setFormToDefault = () => {
 const activateUploadImage = () => {
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
   const imgUploadInput = document.querySelector('#upload-file');
+  setInputHashTag();
+  setInputComment();
 
   imgUploadInput.addEventListener('change', () => {
     chooseUserPhoto();
     setFormToDefault();
     setBodyModalOpen();
-    setInputHashTag();
-    setInputComment();
     imgUploadOverlay.classList.remove('hidden');
     document.querySelector('.text__hashtags').style.outline = '';
   });

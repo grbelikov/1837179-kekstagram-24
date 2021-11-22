@@ -5,8 +5,9 @@ import {ERROR_MESSAGES, MAX_STRING_LENGTH, MAX_AVALIABLE_HASHTAGS,
 // Валидация комментария
 const setInputComment = () => {
   const textDescriptionInput = document.querySelector('.text__description');
+  const uploadSubmitButton = document.querySelector('#upload-submit');
   textDescriptionInput.style.outline = '';
-  textDescriptionInput.addEventListener('input', () => {
+  uploadSubmitButton.addEventListener('click', () => {
     const textComment = textDescriptionInput.value;
 
     if (textComment.length > MAX_STRING_LENGTH) {

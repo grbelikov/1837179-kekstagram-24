@@ -14,16 +14,6 @@ const setSuccessBanner = () => {
   successButton.addEventListener('click', () => {
     successSection.remove();
   });
-  document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === ESC_KEYBUTTON) {
-      successSection.remove();
-    }
-  });
-  window.addEventListener('click', (evt) => {
-    if (!evt.target.closest('.success__inner') && (!evt.target.closest('.success__button'))) {
-      successSection.remove();
-    }
-  });
 };
 
 const setErrorBanner = () => {
@@ -32,16 +22,6 @@ const setErrorBanner = () => {
 
   errorButton.addEventListener('click', () => {
     errorSection.remove();
-  });
-  document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === ESC_KEYBUTTON) {
-      errorSection.remove();
-    }
-  });
-  window.addEventListener('click', (evt) => {
-    if (!evt.target.closest('.error__inner') && (!evt.target.closest('.error__button'))) {
-      errorSection.remove();
-    }
   });
 };
 
@@ -102,6 +82,36 @@ const setFormToDefault = () => {
 const activateUploadImage = () => {
   const imgUploadOverlay = document.querySelector('.img-upload__overlay');
   const imgUploadInput = document.querySelector('#upload-file');
+
+  document.addEventListener('keydown', (evt) => {
+    const successSection = document.querySelector('.success');
+    const errorSection = document.querySelector('.error');
+
+    if (evt.keyCode === ESC_KEYBUTTON) {
+      if (successSection) {
+        successSection.remove();
+      }
+      if (errorSection) {
+        errorSection.remove();
+      }
+    }
+  });
+
+  window.addEventListener('click', (evt) => {
+
+    const successSection = document.querySelector('.success');
+    const errorSection = document.querySelector('.error');
+
+    if (!evt.target.closest('.success__inner') && (!evt.target.closest('.success__button'))) {
+      if (successSection) {
+        successSection.remove();
+      }
+      if (errorSection) {
+        errorSection.remove();
+      }
+    }
+  });
+
   setInputHashTag();
   setInputComment();
 
